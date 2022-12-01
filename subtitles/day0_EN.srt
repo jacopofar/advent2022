@@ -1,0 +1,1156 @@
+1
+00:00:00,000 --> 00:00:05,000
+Welcome to the Advent of Code 2022
+
+2
+00:00:05,000 --> 00:00:11,000
+Today we will do the exercise of day 1 called Calorie Counting
+
+3
+00:00:11,000 --> 00:00:15,000
+I will solve it in Python 3.11
+
+4
+00:00:15,000 --> 00:00:20,000
+The comment will be in Italian but the code will be in English
+
+5
+00:00:20,000 --> 00:00:26,000
+In the video on YouTube I will publish the subtitles in both languages if I can
+
+6
+00:00:26,000 --> 00:00:32,000
+Today's exercise, I'm not reading all of it, gives us a list of numbers
+
+7
+00:00:32,000 --> 00:00:35,000
+separated by an empty line
+
+8
+00:00:35,000 --> 00:00:43,000
+so for example we have 1000, 2000, 3000, an empty line, 4000, an empty line, other numbers and so on
+
+9
+00:00:43,000 --> 00:00:50,000
+Each block of numbers separated by an empty line indicates the food that an elf has and their calories
+
+10
+00:00:50,000 --> 00:00:57,000
+So for example the first elf has a food of 1000 calories, one of 2000 and one of 3000
+
+11
+00:00:57,000 --> 00:01:10,000
+What the exercise asks us to do is to find the elf that has the most calories in total and calculate how many calories it has in total
+
+12
+00:01:10,000 --> 00:01:13,000
+So it's pretty easy as an exercise
+
+13
+00:01:13,000 --> 00:01:16,000
+I start to copy the input to my puzzle
+
+14
+00:01:16,000 --> 00:01:22,000
+The input changes based on the person, so each one has its input and its result
+
+15
+00:01:22,000 --> 00:01:29,000
+I copy it and go where I have the repository already initialized
+
+16
+00:01:29,000 --> 00:01:35,000
+Here I have the initialized git already under version control but I don't have anything else
+
+17
+00:01:35,000 --> 00:01:39,000
+So let's start to create a folder called input
+
+18
+00:01:39,000 --> 00:01:47,000
+where I will insert for each day the input of that day, let's call it day01.txt
+
+19
+00:01:47,000 --> 00:01:52,000
+and paste this thing, it's 2200 lines in my case
+
+20
+00:01:52,000 --> 00:01:56,000
+At this point I initialize the project using pdm
+
+21
+00:01:56,000 --> 00:02:02,000
+which I love, it's my new tool to manage dependencies in Python
+
+22
+00:02:02,000 --> 00:02:06,000
+so I do pdm init
+
+23
+00:02:06,000 --> 00:02:13,000
+It asks me which interpreter I want, 0 is fine, so python 3.11
+
+24
+00:02:13,000 --> 00:02:18,000
+I don't expect to use any specific functionality like 3.11 but I have it
+
+25
+00:02:18,000 --> 00:02:25,000
+Do you want to create a virtualenv with this python? Yes, even if I don't have dependencies for now
+
+26
+00:02:25,000 --> 00:02:30,000
+Is this project a library that will be loaded on pypi? No
+
+27
+00:02:30,000 --> 00:02:37,000
+License MIT is fine, my name is fine, my email is fine
+
+28
+00:02:37,000 --> 00:02:44,000
+ok python, let's do 3.11 but no, let's do a 3.10 at least
+
+29
+00:02:44,000 --> 00:02:50,000
+I don't expect to use anything particular but it's nice
+
+30
+00:02:50,000 --> 00:02:56,000
+Ok, I created it, now I create a folder that will contain my project
+
+31
+00:02:56,000 --> 00:03:00,000
+that I call advent2022
+
+32
+00:03:00,000 --> 00:03:04,000
+One last thing, I want to ignore the inputs
+
+33
+00:03:04,000 --> 00:03:08,000
+so I create a nice .gitignore
+
+34
+00:03:08,000 --> 00:03:12,000
+and inside I put the whole input folder
+
+35
+00:03:12,000 --> 00:03:15,000
+because I don't want to put it under version control
+
+36
+00:03:15,000 --> 00:03:19,000
+and that's it, now I can finally solve the exercise
+
+37
+00:03:19,000 --> 00:03:29,000
+so day01.py, I start to create a function that will be part 1
+
+38
+00:03:29,000 --> 00:03:35,000
+this function will simply show me the result
+
+39
+00:03:35,000 --> 00:03:39,000
+so it will return an int
+
+40
+00:03:39,000 --> 00:03:48,000
+so I do if __name__=="__main__", this is necessary because this code can be imported
+
+41
+00:03:48,000 --> 00:03:51,000
+as a module or executed directly
+
+42
+00:03:51,000 --> 00:03:55,000
+so I don't want to execute anything if it's imported as a module
+
+43
+00:03:55,000 --> 00:04:00,000
+so if for example I write tests later, which maybe I will
+
+44
+00:04:00,000 --> 00:04:03,000
+I can import it and use it
+
+45
+00:04:03,000 --> 00:04:08,000
+What I want to do now is simply print the result of part 1
+
+46
+00:04:08,000 --> 00:04:10,000
+Easy peasy
+
+47
+00:04:10,000 --> 00:04:16,000
+What do I want to do in the main? I want to read the input first
+
+48
+00:04:16,000 --> 00:04:19,000
+so what's in the file?
+
+49
+00:04:19,000 --> 00:04:22,000
+I create a function called get_input
+
+50
+00:04:22,000 --> 00:04:29,000
+and what's in the file? There is a list of lists of numbers
+
+51
+00:04:29,000 --> 00:04:34,000
+so every elf is an element of this high-level list
+
+52
+00:04:34,000 --> 00:04:37,000
+that contains other lists
+
+53
+00:04:37,000 --> 00:04:40,000
+that are the lists of the calories that that elf has
+
+54
+00:04:40,000 --> 00:04:43,000
+so I open my file
+
+55
+00:04:43,000 --> 00:04:48,000
+which will be in input/day01.txt
+
+56
+00:04:48,000 --> 00:04:56,000
+so input/day01.xt
+
+57
+00:04:56,000 --> 00:04:59,000
+I call it fr
+
+58
+00:04:59,000 --> 00:05:02,000
+I create a result that will be this
+
+59
+00:05:02,000 --> 00:05:06,000
+I start a list, the result, then I will return it directly
+
+60
+00:05:06,000 --> 00:05:08,000
+so return res
+
+61
+00:05:08,000 --> 00:05:11,000
+and now what do I do? I will have a partial list
+
+62
+00:05:11,000 --> 00:05:14,000
+of the calories of this elf
+
+63
+00:05:14,000 --> 00:05:17,000
+so these calories
+
+64
+00:05:17,000 --> 00:05:20,000
+I call it partial
+
+65
+00:05:20,000 --> 00:05:22,000
+but who cares, partial
+
+66
+00:05:22,000 --> 00:05:26,000
+and I say ok for each line in fr
+
+67
+00:05:26,000 --> 00:05:28,000
+I say look
+
+68
+00:05:28,000 --> 00:05:31,000
+if the line
+
+69
+00:05:31,000 --> 00:05:34,000
+is equal to a new line
+
+70
+00:05:34,000 --> 00:05:38,000
+I don't remember if this iterator includes the newline or not
+
+71
+00:05:38,000 --> 00:05:43,000
+so let's say that if
+
+72
+00:05:43,000 --> 00:05:46,000
+it seems to me that no, so let's say that if the length of the line
+
+73
+00:05:46,000 --> 00:05:49,000
+in fact you can also do if line
+
+74
+00:05:49,000 --> 00:05:52,000
+but I don't like it, I prefer to make it explicit
+
+75
+00:05:52,000 --> 00:05:55,000
+if the line is empty it means that we are observing an empty line
+
+76
+00:05:55,000 --> 00:05:57,000
+so everything we have seen so far
+
+77
+00:05:57,000 --> 00:06:00,000
+the partial ends up in the result
+
+78
+00:06:00,000 --> 00:06:03,000
+so I say res.append
+
+79
+00:06:03,000 --> 00:06:06,000
+partial and I empty the partial
+
+80
+00:06:06,000 --> 00:06:09,000
+partial is basically what
+
+81
+00:06:09,000 --> 00:06:11,000
+I have accumulated for that elf
+
+82
+00:06:11,000 --> 00:06:14,000
+otherwise I'm seeing some lines with numbers
+
+83
+00:06:14,000 --> 00:06:16,000
+and then at partial
+
+84
+00:06:16,000 --> 00:06:19,000
+I add what? I add the version
+
+85
+00:06:19,000 --> 00:06:22,000
+in the form of int of the line
+
+86
+00:06:22,000 --> 00:06:25,000
+and we can also test it
+
+87
+00:06:25,000 --> 00:06:28,000
+because maybe we need to test it first
+
+88
+00:06:28,000 --> 00:06:31,000
+so what is this called? get_input
+
+89
+00:06:31,000 --> 00:06:34,000
+I execute it, so look
+
+90
+00:06:34,000 --> 00:06:37,000
+run python
+
+91
+00:06:37,000 --> 00:06:40,000
+advent2022
+
+92
+00:06:40,000 --> 00:06:42,000
+day01
+
+93
+00:06:42,000 --> 00:06:44,000
+there's only that one... oh noes
+
+94
+00:06:44,000 --> 00:06:47,000
+I see that here there is a problem because this line
+
+95
+00:06:47,000 --> 00:06:52,000
+contains the newline
+
+96
+00:06:52,000 --> 00:06:55,000
+so I have to do this little game here
+
+97
+00:06:55,000 --> 00:06:58,000
+and I also have to eliminate the last character
+
+98
+00:06:58,000 --> 00:07:00,000
+so minus one
+
+99
+00:07:00,000 --> 00:07:03,000
+maybe strip() does the same
+
+100
+00:07:03,000 --> 00:07:05,000
+let's see
+
+101
+00:07:05,000 --> 00:07:07,000
+let's try
+
+102
+00:07:07,000 --> 00:07:09,000
+yes
+
+103
+00:07:09,000 --> 00:07:11,000
+ok it works
+
+104
+00:07:11,000 --> 00:07:13,000
+there is one thing missing
+
+105
+00:07:13,000 --> 00:07:16,000
+maybe you noticed but there is no logic
+
+106
+00:07:16,000 --> 00:07:18,000
+to manage the last line
+
+107
+00:07:18,000 --> 00:07:21,000
+so at the end of this round
+
+108
+00:07:21,000 --> 00:07:24,000
+I only find the penultimate block
+
+109
+00:07:24,000 --> 00:07:26,000
+because if I never see this line
+
+110
+00:07:26,000 --> 00:07:28,000
+the last block is ignored
+
+111
+00:07:28,000 --> 00:07:31,000
+so I have to add this command
+
+112
+00:07:31,000 --> 00:07:34,000
+also at the end of the cycle
+
+113
+00:07:38,000 --> 00:07:40,000
+ok so we can see that
+
+114
+00:07:40,000 --> 00:07:42,000
+in day01
+
+115
+00:07:42,000 --> 00:07:45,000
+we end up with this 5054 here
+
+116
+00:07:45,000 --> 00:07:48,000
+the block starts with 2124
+
+117
+00:07:48,000 --> 00:07:50,000
+that here seems fine
+
+118
+00:07:50,000 --> 00:07:53,000
+I don't do other tests, I just look at the beginning
+
+119
+00:07:53,000 --> 00:07:55,000
+just for safety but I think we are there
+
+120
+00:07:55,000 --> 00:07:58,000
+7844 perfect
+
+121
+00:07:58,000 --> 00:08:01,000
+ok now let's start with part 1
+
+122
+00:08:01,000 --> 00:08:04,000
+the input will be this one
+
+123
+00:08:04,000 --> 00:08:06,000
+so
+
+124
+00:08:06,000 --> 00:08:09,000
+we call it problem_input
+
+125
+00:08:09,000 --> 00:08:12,000
+I created a function to get the input because then I will pass it
+
+126
+00:08:12,000 --> 00:08:14,000
+also to part 2 when I have it
+
+127
+00:08:14,000 --> 00:08:16,000
+part 1 receives the input
+
+128
+00:08:16,000 --> 00:08:18,000
+as
+
+129
+00:08:18,000 --> 00:08:21,000
+as a value so it receives this thing here
+
+130
+00:08:23,000 --> 00:08:26,000
+this is the problem
+
+131
+00:08:26,000 --> 00:08:29,000
+we call it problem_input
+
+132
+00:08:29,000 --> 00:08:32,000
+ok what was the exercise question?
+
+133
+00:08:32,000 --> 00:08:35,000
+to find the block with the maximum number of calories
+
+134
+00:08:35,000 --> 00:08:38,000
+it is rather
+
+135
+00:08:38,000 --> 00:08:41,000
+easy, the problem is to find
+
+136
+00:08:41,000 --> 00:08:44,000
+the sum of this block so
+
+137
+00:08:44,000 --> 00:08:47,000
+for every elf I calculate the sum of all the calories
+
+138
+00:08:47,000 --> 00:08:50,000
+and I find the maximum of these sums so the elf that has more
+
+139
+00:08:50,000 --> 00:08:53,000
+calories, this is quite
+
+140
+00:08:53,000 --> 00:08:56,000
+easy, I say look
+
+141
+00:08:56,000 --> 00:08:59,000
+return the maximum
+
+142
+00:08:59,000 --> 00:09:02,000
+return, show me
+
+143
+00:09:02,000 --> 00:09:05,000
+replace the maximum
+
+144
+00:09:05,000 --> 00:09:08,000
+of what? of the sum of the calories
+
+145
+00:09:08,000 --> 00:09:11,000
+for every block that I call
+
+146
+00:09:11,000 --> 00:09:14,000
+calories
+
+147
+00:09:14,000 --> 00:09:17,000
+in the problem input
+
+148
+00:09:17,000 --> 00:09:20,000
+note that having used
+
+149
+00:09:20,000 --> 00:09:23,000
+type int Python knows that this
+
+150
+00:09:23,000 --> 00:09:26,000
+calories is a list of ints, it knows that sum of calories is a number
+
+151
+00:09:26,000 --> 00:09:29,000
+and it knows that max is a number so I follow this code
+
+152
+00:09:29,000 --> 00:09:32,000
+and it tells me 67027
+
+153
+00:09:32,000 --> 00:09:35,000
+the solution changes
+
+154
+00:09:35,000 --> 00:09:38,000
+it depends on the user so you could see
+
+155
+00:09:38,000 --> 00:09:41,000
+a different number and this is correct
+
+156
+00:09:41,000 --> 00:09:44,000
+let's try to feed this
+
+157
+00:09:44,000 --> 00:09:47,000
+to the site
+
+158
+00:09:47,000 --> 00:09:50,000
+good, I mean, I'd be surprised if not
+
+159
+00:09:50,000 --> 00:09:53,000
+let's continue with the second part
+
+160
+00:09:53,000 --> 00:09:56,000
+first I want to try some type checking
+
+161
+00:09:56,000 --> 00:09:59,000
+so I say look pdm add
+
+162
+00:09:59,000 --> 00:10:02,000
+to install a dependency
+
+163
+00:10:02,000 --> 00:10:05,000
+dash d to install it as a development dependency
+
+164
+00:10:05,000 --> 00:10:08,000
+so I just need it to test my code
+
+165
+00:10:08,000 --> 00:10:11,000
+not to execute the code
+
+166
+00:10:11,000 --> 00:10:14,000
+and I install mypy which is a type checker
+
+167
+00:10:14,000 --> 00:10:17,000
+beautiful
+
+168
+00:10:17,000 --> 00:10:20,000
+so I install it
+
+169
+00:10:20,000 --> 00:10:23,000
+and not only does it install it in the virtualenv of this project
+
+170
+00:10:23,000 --> 00:10:26,000
+but it adds it to the dependency block
+
+171
+00:10:26,000 --> 00:10:29,000
+that is here dev
+
+172
+00:10:29,000 --> 00:10:32,000
+it is installing mypy 0.991 which at the moment
+
+173
+00:10:32,000 --> 00:10:35,000
+December 2022, is the latest version
+
+174
+00:10:35,000 --> 00:10:38,000
+and now I can execute it
+
+175
+00:10:38,000 --> 00:10:41,000
+I can say look pdm run
+
+176
+00:10:41,000 --> 00:10:44,000
+inside the virtualenv of this project
+
+177
+00:10:44,000 --> 00:10:47,000
+pdm run mypy
+
+178
+00:10:47,000 --> 00:10:50,000
+advent 2022
+
+179
+00:10:50,000 --> 00:10:53,000
+I made a mistake
+
+180
+00:10:53,000 --> 00:10:56,000
+oh no there is an error
+
+181
+00:10:56,000 --> 00:10:59,000
+here at line 4
+
+182
+00:10:59,000 --> 00:11:02,000
+partial is not defined
+
+183
+00:11:02,000 --> 00:11:05,000
+what is partial?
+
+184
+00:11:05,000 --> 00:11:08,000
+it is a list of ints
+
+185
+00:11:08,000 --> 00:11:11,000
+perfect
+
+186
+00:11:11,000 --> 00:11:14,000
+and now I execute it again
+
+187
+00:11:14,000 --> 00:11:17,000
+in strict mode
+
+188
+00:11:17,000 --> 00:11:20,000
+nothing of this is necessary
+
+189
+00:11:20,000 --> 00:11:23,000
+I just like to use mypy when I can
+
+190
+00:11:23,000 --> 00:11:26,000
+perfect
+
+191
+00:11:26,000 --> 00:11:29,000
+I also install black
+
+192
+00:11:29,000 --> 00:11:32,000
+it is not necessary
+
+193
+00:11:32,000 --> 00:11:35,000
+but I like it
+
+194
+00:11:35,000 --> 00:11:38,000
+I reformatted the code
+
+195
+00:11:38,000 --> 00:11:41,000
+to be more beautiful
+
+196
+00:11:41,000 --> 00:11:44,000
+I execute it
+
+197
+00:11:44,000 --> 00:11:47,000
+it did almost nothing
+
+198
+00:11:47,000 --> 00:11:50,000
+and now we have the second part of the problem
+
+199
+00:11:50,000 --> 00:11:53,000
+ok now I'm not going to read the text
+
+200
+00:11:53,000 --> 00:11:56,000
+I will read it later
+
+201
+00:11:56,000 --> 00:11:59,000
+it is telling me that
+
+202
+00:11:59,000 --> 00:12:02,000
+it wants to know the total number of calories
+
+203
+00:12:02,000 --> 00:12:05,000
+of the first three elves
+
+204
+00:12:05,000 --> 00:12:08,000
+that have the maximum number of calories
+
+205
+00:12:08,000 --> 00:12:11,000
+so I don't want to find the maximum
+
+206
+00:12:11,000 --> 00:12:14,000
+but the three maximum
+
+207
+00:12:14,000 --> 00:12:17,000
+and then I want to find the sum
+
+208
+00:12:17,000 --> 00:12:20,000
+so I don't want to find the maximum number of calories
+
+209
+00:12:20,000 --> 00:12:23,000
+but the number of calories of the first three
+
+210
+00:12:23,000 --> 00:12:26,000
+so I can no longer use the max function
+
+211
+00:12:26,000 --> 00:12:29,000
+but it is also quite easy
+
+212
+00:12:29,000 --> 00:12:32,000
+so I do part 2
+
+213
+00:12:32,000 --> 00:12:35,000
+which is a copy of part 1
+
+214
+00:12:35,000 --> 00:12:38,000
+so part 2
+
+215
+00:12:38,000 --> 00:12:41,000
+now I want to know
+
+216
+00:12:41,000 --> 00:12:44,000
+the totals
+
+217
+00:12:44,000 --> 00:12:47,000
+it will be the sum of the calories
+
+218
+00:12:47,000 --> 00:12:50,000
+for everything that is here
+
+219
+00:12:50,000 --> 00:12:53,000
+so this is the sum of the calories
+
+220
+00:12:53,000 --> 00:12:56,000
+for every elf
+
+221
+00:12:56,000 --> 00:12:59,000
+totals is a list
+
+222
+00:12:59,000 --> 00:13:02,000
+of ints
+
+223
+00:13:02,000 --> 00:13:05,000
+so a list of numbers
+
+224
+00:13:05,000 --> 00:13:08,000
+so this is the calories of the healthy
+
+225
+00:13:08,000 --> 00:13:11,000
+I want to order it
+
+226
+00:13:11,000 --> 00:13:14,000
+I can sort it directly
+
+227
+00:13:14,000 --> 00:13:17,000
+sorted
+
+228
+00:13:17,000 --> 00:13:20,000
+I don't remember if it is growing or decreasing
+
+229
+00:13:20,000 --> 00:13:23,000
+it seems to me that it is growing
+
+230
+00:13:23,000 --> 00:13:26,000
+there is the option
+
+231
+00:13:26,000 --> 00:13:29,000
+reverse
+
+232
+00:13:29,000 --> 00:13:32,000
+which gives me the totals
+
+233
+00:13:32,000 --> 00:13:35,000
+putting the first three
+
+234
+00:13:35,000 --> 00:13:38,000
+in ascending order
+
+235
+00:13:38,000 --> 00:13:41,000
+so the first three values will be the three elves
+
+236
+00:13:41,000 --> 00:13:44,000
+with the maximum number of calories
+
+237
+00:13:44,000 --> 00:13:47,000
+so I tell it
+
+238
+00:13:47,000 --> 00:13:50,000
+give me the sum of the totals
+
+239
+00:13:50,000 --> 00:13:53,000
+it seems to me
+
+240
+00:13:53,000 --> 00:13:56,000
+that this notation
+
+241
+00:13:56,000 --> 00:13:59,000
+oh mammamia
+
+242
+00:13:59,000 --> 00:14:02,000
+it seems to me that this notation
+
+243
+00:14:02,000 --> 00:14:05,000
+totals 3, replaces the first three
+
+244
+00:14:05,000 --> 00:14:08,000
+but if I don't know I execute it
+
+245
+00:14:08,000 --> 00:14:11,000
+totals equal to this
+
+246
+00:14:11,000 --> 00:14:14,000
+and totals
+
+247
+00:14:14,000 --> 00:14:17,000
+mammamia
+
+248
+00:14:17,000 --> 00:14:20,000
+these are the first three
+
+249
+00:14:20,000 --> 00:14:23,000
+this is exactly what I want
+
+250
+00:14:23,000 --> 00:14:26,000
+so I execute the code
+
+251
+00:14:26,000 --> 00:14:29,000
+let's execute black
+
+252
+00:14:29,000 --> 00:14:32,000
+let's execute mypy
+
+253
+00:14:32,000 --> 00:14:35,000
+well
+
+254
+00:14:35,000 --> 00:14:38,000
+let's execute the code again
+
+255
+00:14:38,000 --> 00:14:41,000
+the second solution
+
+256
+00:14:41,000 --> 00:14:44,000
+this number here
+
+257
+00:14:44,000 --> 00:14:47,000
+site
+
+258
+00:14:47,000 --> 00:14:50,000
+and it's done
+
+259
+00:14:50,000 --> 00:14:53,000
+thanks for watching
+
+260
+00:14:53,000 --> 00:14:56,000
+since we are here let's commit
+
+261
+00:14:56,000 --> 00:14:59,000
+add
+
+262
+00:14:59,000 --> 00:15:02,000
+2022
+
+263
+00:15:02,000 --> 00:15:05,000
+pyproject.toml
+
+264
+00:15:05,000 --> 00:15:08,000
+which is the file created by pdm
+
+265
+00:15:08,000 --> 00:15:11,000
+which is a standard file
+
+266
+00:15:11,000 --> 00:15:14,000
+and the .gitignore
+
+267
+00:15:14,000 --> 00:15:17,000
+in .gitignore, since I'm here, I ignore this
+
+268
+00:15:17,000 --> 00:15:20,000
+.pdm.toml
+
+269
+00:15:20,000 --> 00:15:23,000
+so
+
+270
+00:15:23,000 --> 00:15:26,000
+committed
+
+271
+00:15:26,000 --> 00:15:29,000
+I make a git status to see that there is nothing strange
+
+272
+00:15:29,000 --> 00:15:32,000
+what the hell did I write?
+
+273
+00:15:32,000 --> 00:15:35,000
+no, I want pdm.lock
+
+274
+00:15:35,000 --> 00:15:38,000
+so gid add pdm.lock
+
+275
+00:15:38,000 --> 00:15:41,000
+I commit it now
+
+276
+00:15:41,000 --> 00:15:44,000
+done
+
+277
+00:15:44,000 --> 00:15:47,000
+day01 completed
+
+278
+00:15:47,000 --> 00:15:50,000
+I forgot to update the readme
+
+279
+00:15:50,000 --> 00:15:53,000
+so done, then I'll publish the video
+
+280
+00:15:53,000 --> 00:15:56,000
+so I put the link
+
+281
+00:15:56,000 --> 00:15:59,000
+I make a nice amend
+
+282
+00:15:59,000 --> 00:16:02,000
+well
+
+283
+00:16:02,000 --> 00:16:05,000
+nothing different
+
+284
+00:16:05,000 --> 00:16:08,000
+commit --amend
+
+285
+00:16:08,000 --> 00:16:11,000
+dash a
+
+286
+00:16:11,000 --> 00:16:14,000
+perfect
+
+287
+00:16:14,000 --> 00:16:17,000
+now I push
+
+288
+00:16:17,000 --> 00:16:20,000
+and see you at the next episode
+
+289
+00:16:20,000 --> 00:16:39,000
+bye everyone
+

@@ -6,7 +6,8 @@ My goal this year is to screen record the process with a live comment (in Italia
 
 This is the YouTube channel: https://www.youtube.com/channel/UCFcn89zoMpRqt0RPtNKpdbg
 
+In the subtitles folder you can fine the subtitles, they are generated with Whisper but manually checked and corrected.
 
 ## Status
 
-Day 01: done
+[Day 01](https://youtu.be/gmDWjQjX8KM): done
