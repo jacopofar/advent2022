@@ -9,4 +9,4 @@ This is the YouTube channel: https://www.youtube.com/channel/UCFcn89zoMpRqt0RPtN
 
 ## Status
 
-Day 01: tbd
+Day 01: done
