@@ -1,0 +1,576 @@
+1
+00:00:00,000 --> 00:00:08,640
+bene bene bene benvenuti all'advent of code 2022 oggi faremo l'esercizio del giorno 1
+
+2
+00:00:08,640 --> 00:00:17,600
+chiamato calorie counting lo risolverò in python 3.11 il commento sarà in italiano
+
+3
+00:00:17,600 --> 00:00:23,800
+ma il codice sarà in inglese nel video su youtube pubbicherò i sottotitoli in
+
+4
+00:00:23,800 --> 00:00:30,680
+entrambe le lingue se ci riesco. L'esercizio di oggi, non sto a leggerlo tutto, ci dà una
+
+5
+00:00:30,680 --> 00:00:35,520
+lista di numeri essenzialmente separati da una linea vuota quindi per esempio
+
+6
+00:00:35,520 --> 00:00:41,920
+abbiamo 1000, 2000, 3000, una linea vuota, 4000, una linea vuota, altri numeri e
+
+7
+00:00:41,920 --> 00:00:48,080
+così via. Ogni blocco di numeri separato da una linea vuota indica gli alimenti
+
+8
+00:00:48,080 --> 00:00:53,200
+che un elfo ha e le loro calorie quindi per esempio il primo elfo ha un alimento
+
+9
+00:00:53,200 --> 00:01:00,760
+da 1000 calorie, uno da 2000, uno da 3000. Quello che l'esercizio ci chiede di fare è
+
+10
+00:01:00,760 --> 00:01:08,880
+trovare l'elfo che ha più calorie in totale e calcolare quante calorie ha in
+
+11
+00:01:08,880 --> 00:01:15,560
+tutto quindi è piuttosto facile come esercizio. Inizio a copiare l'input del
+
+12
+00:01:15,560 --> 00:01:20,880
+mio puzzle, l'input cambia in base alla persona quindi ognuno ha il suo input e il suo
+
+13
+00:01:20,880 --> 00:01:29,960
+risultato, lo copio e vado dove ho il repository già inizializzato, qui ho già
+
+14
+00:01:29,960 --> 00:01:35,480
+git inizializzato e già sotto version control ma non nient'altro quindi
+
+15
+00:01:35,480 --> 00:01:41,040
+iniziamo a creare una cartella che chiamo input dove inserirò per ogni giorno
+
+16
+00:01:41,040 --> 00:01:50,360
+l'input di quel giorno, lo chiamo day01.txt e incollo 'sta roba. Sono 2200
+
+17
+00:01:50,360 --> 00:01:56,720
+righe nel mio caso. A questo punto inizializzo il progetto usando pdm che
+
+18
+00:01:56,720 --> 00:02:02,600
+adoro, è il mio nuovo strumento per gestire le dipendenze in python quindi
+
+19
+00:02:02,600 --> 00:02:13,000
+faccio pdm init, mi chiede che interpreti voglio, 0 va bene quindi python 3.11
+
+20
+00:02:13,000 --> 00:02:18,000
+non mi aspetto ad usare nessuna funzionalità specifica tipo 3.11 ma ce l'ho.
+
+21
+00:02:18,000 --> 00:02:23,520
+Vuoi creare la virtualenv con questo python? Sì, anche se per ora non ho
+
+22
+00:02:23,520 --> 00:02:29,960
+dipendenze. Questo progetto è una libreria che sarà caricata su Pypi? No.
+
+23
+00:02:29,960 --> 00:02:36,280
+Licenza? MIT va bene. Nome? Il mio nome va bene. E-mail va bene la mia e-mail.
+
+24
+00:02:36,280 --> 00:02:45,400
+Che python? Facciamo 3.11 ma no facciamo un 3.10 almeno, non mi aspetto
+
+25
+00:02:45,400 --> 00:02:52,840
+di usare niente di particolare ma è carino. Ok, l'ho creato. Adesso creo una
+
+26
+00:02:52,840 --> 00:02:59,960
+cartella che conterrà il mio progetto vero e proprio che chiamo advent 2022.
+
+27
+00:02:59,960 --> 00:03:09,440
+Un'ultima cosa voglio ignorare gli input quindi creo un bel gitignore e dentro ci
+
+28
+00:03:09,440 --> 00:03:15,200
+metto tutta cartella input perché non voglio metterla sotto controllo versione.
+
+29
+00:03:15,200 --> 00:03:22,720
+E questo è quanto. Adesso finalmente posso risolvere l'esercizio. Quindi day01.py
+
+30
+00:03:22,720 --> 00:03:28,400
+inizio a creare una funzione che sarà parte 1.
+
+31
+00:03:28,720 --> 00:03:37,960
+Questa funzione semplicemente mi mostrerà il risultato. Quindi ritornerà un int.
+
+32
+00:03:37,960 --> 00:03:47,400
+Quindi faccio if name equal main. Questo serve perché questo codice può essere
+
+33
+00:03:47,400 --> 00:03:53,120
+importato come modulo oppure eseguito direttamente e quindi voglio evitare di
+
+34
+00:03:53,120 --> 00:03:55,960
+eseguire qualsiasi cosa se viene importato come modulo quindi se per
+
+35
+00:03:55,960 --> 00:04:02,880
+esempio dopo scrivo dei test che magari scriverò posso importarlo e usarlo.
+
+36
+00:04:02,880 --> 00:04:08,160
+Quello che voglio fare adesso è stampare semplicemente il risultato della parte 1.
+
+37
+00:04:08,160 --> 00:04:15,800
+Che cosa voglio fare nel main? Voglio leggere prima di tutto l'input.
+
+38
+00:04:15,800 --> 00:04:23,000
+Quindi cosa c'è nel file? Quindi crea una funzione che chiamo get_input e che cos'è che c'è nel file?
+
+39
+00:04:23,000 --> 00:04:32,360
+C'è una lista di liste di numeri. Quindi ogni elfo è un elemento di
+
+40
+00:04:32,360 --> 00:04:37,640
+questa lista di alto livello che contiene altre liste che sono le liste
+
+41
+00:04:37,640 --> 00:04:44,840
+delle calorie che ha quell'elfo. Quindi mi apro il mio file che sarà
+
+42
+00:04:44,840 --> 00:04:57,080
+dove è che si trova? In input day01.txt quindi input day01.txt
+
+43
+00:04:57,080 --> 00:05:04,640
+Chiamo fr, mi creo il risultato che sarà questo. Inizialmente una lista. Il risultato poi lo
+
+44
+00:05:04,640 --> 00:05:10,000
+ritornerò direttamente quindi return res e adesso cosa faccio? Avrò una lista
+
+45
+00:05:10,000 --> 00:05:18,040
+parziale quindi le calorie di questo elfo quindi list calories o chiamalo
+
+46
+00:05:18,040 --> 00:05:28,600
+partial ma si che c'è frega partial e si ok per ogni linea in fr dico guarda se la
+
+47
+00:05:28,600 --> 00:05:34,960
+linea è uguale a un a capo non mi ricordo se questo
+
+48
+00:05:34,960 --> 00:05:41,240
+iteratore mi include l'a capo o no quindi diciamo che se
+
+49
+00:05:42,360 --> 00:05:47,480
+mi sembra di no quindi diciamo che se la lunghezza linea si può in parts si
+
+50
+00:05:47,480 --> 00:05:53,200
+può fare anche if line ma non mi piace preferisco renderlo esplicito. Se la linea è
+
+51
+00:05:53,200 --> 00:05:56,440
+vuota vuol dire che stiamo osservando una linea vuota quindi tutto ciò che
+
+52
+00:05:56,440 --> 00:06:01,760
+abbiamo visto finora il partial va a finire il risultato quindi dico res dot
+
+53
+00:06:01,760 --> 00:06:09,460
+append partial e svuoto il partial. partial è sostanzialmente quello che ho
+
+54
+00:06:09,460 --> 00:06:14,320
+accumulato da quell'elfo altrimenti sto vedendo qualche linea con dei numeri e
+
+55
+00:06:14,320 --> 00:06:20,480
+quindi a partial aggiungo che cosa? aggiungo la versione sotto forma di int
+
+56
+00:06:20,480 --> 00:06:27,600
+della linea e lo possiamo anche testare no? perché magari ci serve testarlo
+
+57
+00:06:27,600 --> 00:06:34,520
+prima quindi come si chiama questo cosa? getinput lo eseguo quindi guarda pdm run
+
+58
+00:06:34,520 --> 00:06:45,680
+python-advent-022-01 lo eseguo o no? vedo che qui c'è un problema
+
+59
+00:06:45,680 --> 00:06:52,920
+perché questa linea contiene la capo quindi devo fare
+
+60
+00:06:52,920 --> 00:07:01,000
+questo giochino qui e devo anche eliminare l'ultimo carattere quindi meno uno forse
+
+61
+00:07:01,000 --> 00:07:10,120
+strip fa lo stesso vediamo un po' non mi ricordo se... ne proviamo? sì ok funziona
+
+62
+00:07:10,120 --> 00:07:14,440
+c'è una cosa che manca forse ci avete fatto caso ma non c'è
+
+63
+00:07:14,440 --> 00:07:19,880
+nessuna logica per gestire l'ultima linea quindi alla fine tutto sta su
+
+64
+00:07:19,880 --> 00:07:24,760
+sto giro io trovo solo il penultimo blocco perché? perché se non vedo mai
+
+65
+00:07:24,760 --> 00:07:29,860
+questa linea l'ultimo blocco viene ignorato quindi devo aggiungere questo
+
+66
+00:07:29,860 --> 00:07:35,400
+comando anche alla fine del ciclo for
+
+67
+00:07:37,400 --> 00:07:45,840
+ok quindi possiamo vedere che nel t01 finiamo con questo 5054 che qui il
+
+68
+00:07:45,840 --> 00:07:51,560
+blocco inizia con 2124 che qua sembra a posto no no non faccio altri test
+
+69
+00:07:51,560 --> 00:07:58,280
+guarda solo l'inizio giusto per sicurezza ma credo che ci siamo 7844 perfetto
+
+70
+00:07:58,280 --> 00:08:01,440
+bene adesso iniziamo con la parte 1 vera e propria
+
+71
+00:08:01,440 --> 00:08:09,120
+l'input sarà questo qua quindi lo chiamo problem_input può creare una funzione
+
+72
+00:08:09,120 --> 00:08:12,840
+a parte per prendere l'input perché poi lo passerò anche alla parte 2 quando
+
+73
+00:08:12,840 --> 00:08:22,680
+ce l'ho la parte 1 riceve l'input come come valore quindi riceve sta roba qui
+
+74
+00:08:22,680 --> 00:08:30,800
+questo è questo è il problema quindi problem input lo chiamo bene qual era la
+
+75
+00:08:30,800 --> 00:08:37,600
+domanda esercizio era trovare il blocco col massimo numero di calorie è piuttosto
+
+76
+00:08:37,600 --> 00:08:42,360
+facile al quello che ci chiede il problema è trovare la somma di questo
+
+77
+00:08:42,360 --> 00:08:46,640
+blocco quindi sostanzialmente per ogni elfo calcolo la somma di tutte le
+
+78
+00:08:46,640 --> 00:08:50,800
+calorie e trovo il massimo di queste somme quindi l'elfo che ha più calorie
+
+79
+00:08:50,800 --> 00:08:58,600
+questo è abbastanza facile dico guarda fammi ritornare il massimo massimo
+
+80
+00:08:58,600 --> 00:09:06,200
+come cacchio parlo ritornami mostrami restituisci il massimo, di cosa, della
+
+81
+00:09:06,200 --> 00:09:13,160
+somma delle calorie per ogni blocco che chiamo calories
+
+82
+00:09:13,160 --> 00:09:22,200
+nel l'input è problema notate che avendo usato i type int python sa che
+
+83
+00:09:22,200 --> 00:09:26,440
+questo calories è una lista di int sa che sum di calories è un numero e sa che
+
+84
+00:09:26,440 --> 00:09:32,760
+max è un numero quindi eseguo questo codice e mi dice 67027 la soluzione
+
+85
+00:09:32,760 --> 00:09:38,640
+cambia dipende dall'utente quindi voi poteste vedere un numero diverso questo
+
+86
+00:09:38,640 --> 00:09:44,040
+è corretto proviamo a dare questo in pasto al
+
+87
+00:09:44,040 --> 00:09:47,320
+al sito
+
+88
+00:09:48,000 --> 00:09:53,680
+bene a voglio dire ci mancherebbe continuiamo con la parte 2 prima voglio
+
+89
+00:09:53,680 --> 00:09:59,340
+provare un po di type checking quindi dico guarda pdm ad per installare la
+
+90
+00:09:59,340 --> 00:10:04,800
+dipendenza trattino di per installarla come dipendenza di sviluppo quindi mi
+
+91
+00:10:04,800 --> 00:10:11,480
+serve solo per testare i miei codici non per eseguire il codice per proprio e
+
+92
+00:10:11,480 --> 00:10:18,800
+installo mypi che è un type checker bellissimo quindi lo installo e non
+
+93
+00:10:18,800 --> 00:10:23,320
+solo installa nel virtualenv di questo progetto ma mi raggiunge al blocco delle
+
+94
+00:10:23,320 --> 00:10:30,240
+dipendenze che si trova qui dev sta installando mypi 0.991 che al momento
+
+95
+00:10:30,240 --> 00:10:36,120
+dicembre 2022 è l'ultima versione e ora la posso eseguire posso dire guarda pdm
+
+96
+00:10:36,120 --> 00:10:42,000
+run questo pdm run serve a eseguire un comando all'interno del virtualenv di
+
+97
+00:10:42,000 --> 00:10:50,000
+questo progetto pdm run mypi advent 2022
+
+98
+00:10:50,000 --> 00:11:00,000
+ho sbagliato a scrivere mypi oh no c'è un errore qui alla riga 4 partial non è
+
+99
+00:11:00,000 --> 00:11:11,160
+definito che cos'è partial? è una lista di int perfetto e ora lo eseguo di nuovo
+
+100
+00:11:11,160 --> 00:11:15,160
+perfetto tutto a posto e ora lo eseguo anche in modalità strict non è
+
+101
+00:11:15,160 --> 00:11:18,320
+strettamente necessario in realtà niente di questo è necessario solo che mi piace
+
+102
+00:11:18,320 --> 00:11:23,200
+usare mypi quando posso perfetto tutto a posto
+
+103
+00:11:23,200 --> 00:11:29,640
+già che ci sono installo anche black non è necessario nemmeno questo ma mi
+
+104
+00:11:29,640 --> 00:11:38,760
+piace lo installo black è un linter quindi mi riformata il codice per essere
+
+105
+00:11:38,760 --> 00:11:45,240
+più bello lo eseguo non ha fatto quasi nulla cambiato gli apici in dopi apici
+
+106
+00:11:45,240 --> 00:11:51,040
+quindi ha usato le vibrette e ora abbiamo la seconda parte del problema
+
+107
+00:11:51,040 --> 00:11:56,080
+ok ora non sto a leggere il testo lo leggerò magari dopo con calma
+
+108
+00:11:56,080 --> 00:12:04,760
+mi sta dicendo che vuol sapere il numero totale delle calorie dei primi tre elfi che
+
+109
+00:12:04,760 --> 00:12:07,760
+hanno il numero massimo di calorie quindi non voglio più trovare il massimo
+
+110
+00:12:07,760 --> 00:12:15,880
+ma i 3 massimi diciamo e poi voglio trovare la somma quindi non voglio più
+
+111
+00:12:15,880 --> 00:12:20,800
+trovare il numero calorie del massimo ma il numero calorie dei primi 3 la somma
+
+112
+00:12:20,800 --> 00:12:27,600
+dei primi tre quindi non posso più usare la funzione max direttamente ma è
+
+113
+00:12:27,600 --> 00:12:32,600
+anche abbastanza facile anche in questo modo faccio part 2 che è una copia della
+
+114
+00:12:32,600 --> 00:12:41,520
+part 1 inizialmente quindi part 2 questa qui ora cosa voglio fare voglio sapere i
+
+115
+00:12:41,520 --> 00:12:48,880
+totali quindi lo chiamo totals sarà la somma delle calorie per ogni roba che
+
+116
+00:12:48,880 --> 00:12:53,160
+qui quindi questa è la somma delle calorie per ogni elfo quindi è la
+
+117
+00:12:53,160 --> 00:13:02,240
+lista dei delle somme totals è una lista di int quindi una lista di numeri quindi
+
+118
+00:13:02,240 --> 00:13:08,760
+questa calorie degli elfi lo voglio ordinare quindi dico magari lo faccio
+
+119
+00:13:08,760 --> 00:13:15,240
+anche così direttamente lo posso sortare direttamente sorted
+
+120
+00:13:15,240 --> 00:13:21,480
+sorted non mi ricordo mai se crescente o decrescente mi sembra crescente
+
+121
+00:13:21,480 --> 00:13:30,000
+ritorno la lista bla bla bla ascending order c'è l'opzione reverse true che
+
+122
+00:13:30,000 --> 00:13:36,760
+praticamente mi dà i totali mettendo i primi tre in ordine decrescente quindi
+
+123
+00:13:36,760 --> 00:13:42,160
+i primi tre valori saranno i tre elfi con il massimo numeri calorie totali
+
+124
+00:13:42,160 --> 00:13:50,920
+quindi gli dico guarda fammi la somma dei totals filo numero 3 mi sembra che
+
+125
+00:13:50,920 --> 00:13:55,120
+questa notazione
+
+126
+00:13:55,680 --> 00:14:00,960
+oh mamma mia sono in caballo oggi mi sembra questa notazione totals in tre
+
+127
+00:14:00,960 --> 00:14:06,960
+restituisca i primi tre elementi ma se non lo so la eseguo quindi totals è uguale a
+
+128
+00:14:06,960 --> 00:14:13,240
+questo questo questo questo questo questo e totals
+
+129
+00:14:13,240 --> 00:14:20,160
+totals mamma mia con tre sono i primi tre elementi in questo caso 2 3 5
+
+130
+00:14:20,160 --> 00:14:27,520
+perfetto questo è esattamente quello che voglio quindi eseguo il codice ancora
+
+131
+00:14:27,520 --> 00:14:32,480
+seguiamo black già che ci siamo e seguiamo mypy perché non si sa mai
+
+132
+00:14:32,480 --> 00:14:37,600
+bene eseguiamo il codice di nuovo
+
+133
+00:14:39,400 --> 00:14:49,000
+la seconda soluzione questo numero qui me lo incollo nel mio sito ed è fatto
+
+134
+00:14:49,000 --> 00:14:54,240
+bene grazie per aver visto ma già che ci siamo committiamo quindi guarda commit
+
+135
+00:14:54,240 --> 00:15:05,200
+a vi magari addo le cose quindi a 2022 byproject.toml che è il file creato da
+
+136
+00:15:05,200 --> 00:15:10,520
+pdm che però è un file standard di python quindi anche altri strumenti lo
+
+137
+00:15:10,520 --> 00:15:16,440
+capiscono e il gitignore ovviamente il gitignore già che ci sono ignoro
+
+138
+00:15:16,440 --> 00:15:27,040
+questo punto pdm.toml quindi committo faccio uno status per vedere che non c'è
+
+139
+00:15:27,040 --> 00:15:34,080
+niente di strano che cacchio scritto no è punto pdm punto no pdm.loc lo voglio
+
+140
+00:15:34,080 --> 00:15:47,680
+quindi kit add pdm.loc e basta lo committo adesso da day01 completed mi
+
+141
+00:15:47,680 --> 00:15:52,360
+sono dimenticato di aggiornare readme quindi done poi pubblicherò il video
+
+142
+00:15:52,360 --> 00:16:05,360
+ovviamente quindi metterò link faccio un bel amend niente di differente il
+
+143
+00:16:05,360 --> 00:16:19,360
+commit-amend-e perfetto se tu sono niente ora push e ci vediamo alla prossima puntata
+
+144
+00:16:19,360 --> 00:16:22,480
+ciao a tutti
+
