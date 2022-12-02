@@ -11,3 +11,4 @@ In the subtitles folder you can fine the subtitles, they are generated with Whis
 ## Status
 
 [Day 01](https://youtu.be/gmDWjQjX8KM): done
+[Day 02](https://youtu.be/w-seroxZ4vA): done, part 2 not on video for brevity
