@@ -1,0 +1,512 @@
+1
+00:00:00,000 --> 00:00:07,820
+Hello everyone and welcome to day 2 of the Advent of Code 2022. Today we have a
+
+2
+00:00:07,820 --> 00:00:14,140
+game of rock-paper-scissors and the description of the problem is a bit strange, in the sense that it talks
+
+3
+00:00:14,140 --> 00:00:21,060
+about a strategy and the input in theory defines a strategy, but in reality what it does is define a
+
+4
+00:00:21,060 --> 00:00:29,940
+list of games of rock-paper-scissors and the problem asks us to evaluate, to calculate what the
+
+5
+00:00:29,940 --> 00:00:38,040
+final result is. The final score is given by a series of points based on how many games I won or
+
+6
+00:00:38,040 --> 00:00:46,040
+ended up in a draw plus some points calculated based on which of the three possibilities I have
+
+7
+00:00:46,040 --> 00:00:56,600
+chosen, so for example if my opponent choses rock and I chose paper I get 8 points for
+
+8
+00:00:56,600 --> 00:01:03,880
+having won, which are given by 2 points for having chosen paper because paper is worth 2 in this case
+
+9
+00:01:03,880 --> 00:01:13,160
+plus 6 points for having won, so the input we have here is a list of letters that are for my
+
+10
+00:01:13,160 --> 00:01:22,840
+opponent A, B and C and for me X, Y and Z that represent rock, paper and scissors, so I have to copy this
+
+11
+00:01:22,840 --> 00:01:32,120
+input, I use the same structure as yesterday so I create a new file that I will call day02.txt,
+
+12
+00:01:32,120 --> 00:01:40,640
+I paste the input and this is it. Same thing for the python file, I create a new file that I call
+
+13
+00:01:40,640 --> 00:01:54,360
+day02.py, here I go to read the input, then I create a function that I will call get_input
+
+14
+00:02:00,280 --> 00:02:04,120
+which will return a string list
+
+15
+00:02:04,120 --> 00:02:21,000
+we could also make it become a list of tuples, we make strings and that's it, this
+
+16
+00:02:21,000 --> 00:02:27,240
+makes me read the file as I did yesterday, so in fact I copy the code from yesterday,
+
+17
+00:02:27,240 --> 00:02:41,000
+with open blah blah blah, I open the file and I read it, fr.readlines will give me all the
+
+18
+00:02:41,000 --> 00:02:51,120
+lines, they are a string list and for each one I want, in this case while at it, I eliminate the
+
+19
+00:02:51,120 --> 00:02:58,320
+central space because it does nothing, it has no advantage, this space that I have between
+
+20
+00:02:58,320 --> 00:03:13,480
+the two letters, so I make a nice return of the line, the first character and now the second,
+
+21
+00:03:13,480 --> 00:03:22,880
+nah, let's do replace, so it is very clear what we are doing, I am removing the space
+
+22
+00:03:22,880 --> 00:03:35,920
+for help in fr.readlines and that's it, I don't see any problem, since I have it, I do mypy,
+
+23
+00:03:35,920 --> 00:03:54,160
+ok, no problem, well, so let's create our usual control, if __name__ equals __main__, maybe tomorrow
+
+24
+00:03:54,160 --> 00:04:03,240
+I will write this part before the video, I take the input, so problem input will be get_input
+
+25
+00:04:03,240 --> 00:04:14,560
+and I pass it to the function that will be part 1 as yesterday, so I create two functions that
+
+26
+00:04:14,560 --> 00:04:28,800
+make part 1 and part 2, the result of this function will be a number, an integer,
+
+27
+00:04:28,800 --> 00:04:43,080
+and what does this function do? So it must calculate for each game, so for each pair of three letters
+
+28
+00:04:43,080 --> 00:04:54,000
+that will be my opponent and me, the score of that game, so this score is given by two elements,
+
+29
+00:04:54,000 --> 00:05:02,080
+which are the score given by the fact that I won or lost or evened out and the score given by what I
+
+30
+00:05:02,080 --> 00:05:10,040
+chose, how many possible combinations there can be in a game, the possible letters that
+
+31
+00:05:10,040 --> 00:05:16,480
+can be there, so in a row? are nine because there are three possibilities for what my opponent plays,
+
+32
+00:05:16,480 --> 00:05:22,680
+three possibilities for what I play and therefore three times three is nine, so nine possible
+
+33
+00:05:22,680 --> 00:05:28,640
+combinations, it means that there are so few that I can easily list them, I can list them and
+
+34
+00:05:28,640 --> 00:05:36,400
+calculate one by one what the result is, I can do this with a series of ifs, obviously feasible,
+
+35
+00:05:36,400 --> 00:05:41,040
+there are only nine, but it is easier and intuitive to do it with a dictionary, so I create a dictionary
+
+36
+00:05:41,040 --> 00:05:47,240
+that will be at the level of the module because maybe I will reuse it for part 2 because it will ask me
+
+37
+00:05:47,240 --> 00:05:57,160
+to calculate something like that and I can call this dictionary scores, I create a
+
+38
+00:05:57,160 --> 00:06:04,120
+good dictionary and here I can go and put all the combinations, so A equals something,
+
+39
+00:06:04,120 --> 00:06:14,720
+so I repeat three times, maybe I also put a comma that we say, then I will also put B equals
+
+40
+00:06:14,720 --> 00:06:36,400
+something obviously and since there are, I do the same thing with C, so I have C and then we can put the
+
+41
+00:06:36,400 --> 00:06:52,360
+combinations of x, y and z, so I use the multiple cursor and put one x, one y and one z, ok I have created all
+
+42
+00:06:52,360 --> 00:06:59,120
+the combinations that can be in a row, if I have something that is not in this dictionary it means
+
+43
+00:06:59,120 --> 00:07:06,560
+that there is an error, now here I could already put the score calculated according to the two rules,
+
+44
+00:07:06,560 --> 00:07:12,440
+so the rule that gives a score to the game and the rule that gives a score to the single element
+
+45
+00:07:12,440 --> 00:07:18,880
+that I have played, I prefer to keep them separate because you never know that part 2 asks me
+
+46
+00:07:18,880 --> 00:07:25,160
+a different criterion, so it makes me comfortable to already have the dictionaries separate, so I call it
+
+47
+00:07:25,160 --> 00:07:37,560
+gamescores to indicate that it is the score of how much a single game gives me, not the score given by
+
+48
+00:07:37,560 --> 00:07:48,840
+indeed no... no, nothing, I do gamescores, so this is how much a game gives me but only
+
+49
+00:07:48,840 --> 00:07:54,080
+for the fact that I have won or lost, then from another dictionary or another if for the score
+
+50
+00:07:54,080 --> 00:08:03,200
+of what I have played, now I have created all the combinations and then we proceed to give the
+
+51
+00:08:03,200 --> 00:08:17,780
+scores, what does it tell us where the hell it is here, what does it tell us about the score of the game that we take
+
+52
+00:08:17,780 --> 00:08:28,640
+0 if we lose, 3 if we even and 6 if we win, so I start with the draw that is 3 and here I say
+
+53
+00:08:28,640 --> 00:08:40,160
+if AX which means both have stone, BY which means both have paper and CZ which means both have
+
+54
+00:08:40,160 --> 00:08:49,360
+scissors, they are three points because we have evened the game I see it from the point of view of my
+
+55
+00:08:49,360 --> 00:09:00,440
+player so the second letter x y z and then we have that if the opponent plays a and I
+
+56
+00:09:00,440 --> 00:09:11,240
+have played y I have won so they are 6 points and therefore this other 0 if the opponent has played b
+
+57
+00:09:11,240 --> 00:09:19,760
+which is paper and I have played x which is stone the opponent has won so 0 points therefore the other
+
+58
+00:09:19,760 --> 00:09:28,880
+are 6 last combination cx if the opponent has played c which are scissors and I have played x
+
+59
+00:09:28,880 --> 00:09:37,680
+which is stone I have won so they are 6 points otherwise 0 we can control it for
+
+60
+00:09:37,680 --> 00:09:43,800
+sure that since I have always used the same order of letters the order of numbers is always different
+
+61
+00:09:43,800 --> 00:09:52,640
+so I have 360 036 603 perfect if you are wondering how I do to be so fast and safe when
+
+62
+00:09:52,640 --> 00:09:57,840
+I write these points it is because reading the problem before the video I made a sketch by hand
+
+63
+00:09:57,840 --> 00:10:02,680
+with the three scissors and paper scissors but I do not put it in a video because editing the video
+
+64
+00:10:02,680 --> 00:10:07,320
+requires a lot of time and I do not have enough visualizations to justify this effort
+
+65
+00:10:07,320 --> 00:10:16,560
+well then we have game scores which are the scores of the games maybe I create a comment
+
+66
+00:10:16,560 --> 00:10:28,680
+that says what this game score does so the score that derives from the game itself
+
+67
+00:10:28,680 --> 00:10:36,560
+the comment is not really clear in fact I can also
+
+68
+00:10:36,560 --> 00:10:51,720
+comment is not that adds a lot anyway I have it well now we want to do our calculation
+
+69
+00:10:51,720 --> 00:11:02,400
+now you can make a nice sum of a list comprehension and I think that is what I will do in fact
+
+70
+00:11:02,400 --> 00:11:10,280
+it does not seem quite complicated to me to request to decompose a loophole or something like that
+
+71
+00:11:10,280 --> 00:11:16,160
+I make a list comprehension and I'm fine so I create another dictionary that we call
+
+72
+00:11:16,160 --> 00:11:25,920
+how we call it this is the most difficult problem of informatics to give names to things we call it
+
+73
+00:11:25,920 --> 00:11:35,560
+move_score this is another dictionary that contains the three scores that obviously I forgot
+
+74
+00:11:35,560 --> 00:11:56,040
+for stone paper scissors so 1 is stone 2 is paper and 3 is scissors so 1 is stone 2 is paper and 3 is scissors
+
+75
+00:11:56,040 --> 00:12:10,080
+and now I want what the problem is asking us the total sum yes question we have to calculate the
+
+76
+00:12:10,080 --> 00:12:20,720
+score even when I lose yes so it is a simple sum there is no score of my move
+
+77
+00:12:20,720 --> 00:12:26,800
+is calculated even when I lose so they are completely unrelated I want to do the sum of what
+
+78
+00:12:26,800 --> 00:12:39,920
+of the score due to the game then game scores of the move of the game that we call p indeed
+
+79
+00:12:39,920 --> 00:12:50,200
+I call yeah, pi per play the same plus the move score of what of the second letter of the game
+
+80
+00:12:50,200 --> 00:13:02,320
+so 1 of p for each p in the input then the input is the list of the moves for each value this is a
+
+81
+00:13:02,320 --> 00:13:09,160
+comprehension for each value then for each pair of letters I take the result of the game
+
+82
+00:13:09,160 --> 00:13:16,040
+then this value here and sum the result in the move the move is calculated only based on what I
+
+83
+00:13:16,040 --> 00:13:24,400
+played so I have to take the second letter then p1 and this obviously I have to return it
+
+84
+00:13:24,400 --> 00:13:32,720
+maybe so and this is how much so I use mypy just for paranoia and black because
+
+85
+00:13:32,720 --> 00:13:46,240
+because no perfect and now I can finally run my code we follow day 2... oh no there is a small
+
+86
+00:13:46,240 --> 00:13:56,760
+problem you see that here we are keeping track of the newline because this read lines includes
+
+87
+00:13:56,760 --> 00:14:09,760
+even if here it does not say it the newline so I strip all the values ​​that are not characters
+
+88
+00:14:09,760 --> 00:14:18,560
+so white space that are at the end perfect so to recap this backslash n is simple
+
+89
+00:14:18,560 --> 00:14:24,600
+of the newline that is provided by read lines I never remember when I eliminate the newline no so
+
+90
+00:14:24,600 --> 00:14:31,200
+it is something that I generally ignore and solve when I see this problem so it gave me a number
+
+91
+00:14:31,200 --> 00:14:41,960
+and I put this number in the puzzle perfect let's see part 2 that I don't know this is always a
+
+92
+00:14:41,960 --> 00:14:48,000
+risk when you improvise but at most I cut the video of one part as I did last year in English
+
+93
+00:14:48,000 --> 00:15:01,560
+there is some story to add here it is what a mess it is?? x means that you lose ok
+
+94
+00:15:01,560 --> 00:15:11,120
+so the final point is always calculated in the same way but now you have to choose which
+
+95
+00:15:11,120 --> 00:15:17,040
+figure to choose ok I didn't know it was called a figure I will forget it in two minutes
+
+96
+00:15:17,040 --> 00:15:27,840
+the example goes like this so if your opponent chooses a stone but you choose no but you are y so you have to
+
+97
+00:15:27,840 --> 00:15:35,120
+even out you have to choose even you stone ok so this problem is totally disconnected from the
+
+98
+00:15:35,120 --> 00:15:59,760
+problem ok oh what a bad thing ok really bizarre we can only reuse a little piece
+
+99
+00:15:59,760 --> 00:16:10,280
+which is the value of the individual pieces so what do we have to do for part 2 we have to do
+
+100
+00:16:10,280 --> 00:16:22,320
+something really strange oh what a bad thing it feels like working with excel so it works like this if we
+
+101
+00:16:22,320 --> 00:16:31,640
+have for example let's see a concrete example from my file if I have c y the y is no longer indicated
+
+102
+00:16:31,640 --> 00:16:38,360
+is no longer the move I played but the result I want to get y means
+
+103
+00:16:38,360 --> 00:16:50,940
+even so x loss y is even and z victory this means that if I have a y here this
+
+104
+00:16:50,940 --> 00:16:58,080
+game will have to equalize so I will also have to play a c which is equal to scissors the score
+
+105
+00:16:58,080 --> 00:17:02,920
+I take for this game is simply the score of the scissors it does not matter if I come or lose
+
+106
+00:17:02,920 --> 00:17:12,480
+well then I simply have to calculate the values ​​for each possible combination which is a bit of a
+
+107
+00:17:12,480 --> 00:17:32,480
+mistake but we can do it so I call this case course 2 and here we have the joy of
+
+108
+00:17:32,480 --> 00:17:42,640
+understanding what we want to do so let's see with the x I mean that I have to lose so let's start
+
+109
+00:17:42,640 --> 00:17:50,560
+with the y which is the draw right because the y is the simplest case because if I draw
+
+110
+00:17:50,560 --> 00:18:00,320
+I simply have to play the same move of the other so what are the scores are still the same
+
+111
+00:18:00,320 --> 00:18:19,840
+before perfect or no I understood badly I still have to count the result ok so it seems a
+
+112
+00:18:19,840 --> 00:18:33,360
+bit of a bizarre situation because I don't like it because it is unnecessarily complicated and the
+
+113
+00:18:33,360 --> 00:18:41,520
+complexity derives only from understand the problem because actually inventing something means that I
+
+114
+00:18:41,520 --> 00:18:48,880
+have to write all the combinations the combinations can also be skipped if you want because this
+
+115
+00:18:48,880 --> 00:18:59,920
+game is essentially based on a modulo so I have a ring with all the possible moves and I win
+
+116
+00:18:59,920 --> 00:19:07,200
+if they are let's say before or after the position of the opponent on this ring so you can
+
+117
+00:19:07,200 --> 00:19:17,120
+make a module but for three possible values ​​it doesn't make any sense, I just write all the
+
+118
+00:19:17,120 --> 00:19:25,280
+values ​​that I have named so let's see what a bad problem still better than IntCode from 2019 we have
+
+119
+00:19:25,280 --> 00:19:36,200
+then x which means that open then the opponent played card so I play scissors and if I play
+
+120
+00:19:36,200 --> 00:19:48,760
+scissors I have zero points to have lost but I have points to have played scissors which are three if I
+
+121
+00:19:48,760 --> 00:19:56,680
+then go to the b if I go to the y because the y in fact is the simplest case because the y is
+
+122
+00:19:56,680 --> 00:20:09,120
+a draw so I have to play a which is 1 plus the score of the draw which is 3 it seems to me yes
+
+123
+00:20:09,120 --> 00:20:30,760
+this instead is a loss so if it is a loss I already put the plus plus plus if it is a draw
+
+124
+00:20:30,760 --> 00:20:36,200
+I'm getting lost ok I think I'll do this part offline because it's only about...
+
+125
+00:20:36,200 --> 00:20:42,560
+so let's pretend that I have implemented this dictionary it makes no sense to be here to write it
+
+126
+00:20:42,560 --> 00:20:52,840
+part 2 simply the sum of the game score 2 for the p
+
+127
+00:20:52,840 --> 00:21:02,360
+and I will implement it apart not in the video because there is not a great advantage
+
+128
+00:21:02,360 --> 00:21:06,400
+see you at the next day bye bye
+
