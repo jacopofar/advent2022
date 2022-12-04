@@ -25,3 +25,6 @@ dev = [
 packages = [
     "advent2022",
 ]
+
+[tool.pdm.scripts]
+mypy_strict = "mypy --strict -p advent2022"

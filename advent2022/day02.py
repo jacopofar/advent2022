@@ -41,7 +41,11 @@ def part_two(problem_input: list[str]) -> int:
     return sum(GAME_SCORES2[p] for p in problem_input)
 
 
-if __name__ == "__main__":
+def main() -> None:
     problem_input = get_input()
     print(part_one(problem_input))
     print(part_two(problem_input))
+
+
+if __name__ == "__main__":
+    main()

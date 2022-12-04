@@ -12,18 +12,22 @@ def get_input() -> list[list[int]]:
     return res
 
 
-def part1(problem_input: list[list[int]]) -> int:
+def part_one(problem_input: list[list[int]]) -> int:
     return max(sum(calories) for calories in problem_input)
 
 
-def part2(problem_input: list[list[int]]) -> int:
+def part_two(problem_input: list[list[int]]) -> int:
     totals: list[int] = sorted(
         [sum(calories) for calories in problem_input], reverse=True
     )
     return sum(totals[:3])
 
 
-if __name__ == "__main__":
+def main() -> None:
     problem_input = get_input()
-    print(part1(problem_input))
-    print(part2(problem_input))
+    print(part_one(problem_input))
+    print(part_two(problem_input))
+
+
+if __name__ == "__main__":
+    main()

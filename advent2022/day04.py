@@ -29,7 +29,11 @@ def part_two(problem_input: list[tuple[int, int, int, int]]) -> int:
     return sum(1 for a, b, c, d in problem_input if min((b, d)) >= max((a, c)))
 
 
-if __name__ == "__main__":
+def main() -> None:
     problem_input = get_input()
     print(part_one(problem_input))
     print(part_two(problem_input))
+
+
+if __name__ == "__main__":
+    main()
