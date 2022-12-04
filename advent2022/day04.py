@@ -1,6 +1,6 @@
 import re
 
-NON_DIGIT = re.compile(r"[^0-9]")
+NON_DIGIT = re.compile("[^0-9]")
 
 
 def get_input() -> list[tuple[int, int, int, int]]:
