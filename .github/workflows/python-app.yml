@@ -1,0 +1,32 @@
+# This workflow will install Python dependencies, and run mypy using PDM
+
+name: Mypy
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2.5.0
+    - uses: pdm-project/setup-pdm@v3
+      name: Setup PDM
+      with:
+        python-version: 3.10  # Version range or exact version of a Python version to use, the same as actions/setup-python
+        architecture: x64    # The target architecture (x86, x64) of the Python interpreter. the same as actions/setup-python
+        prerelease: true     # Allow prerelease versions to be installed
+        enable-pep582: true  # Enable PEP 582 package loading globally
+    - name: Install dependencies
+      run: pdm install --dev
+    - name: Mypy
+      run: pdm run mypy_strict
