@@ -10,8 +10,8 @@ In the subtitles folder you can fine the subtitles, they are generated with Whis
 
 ## Status
 
-[Day 01](https://youtu.be/gmDWjQjX8KM): done
-[Day 02](https://youtu.be/w-seroxZ4vA): done, part 2 not on video for brevity
-[Day 03](https://youtu.be/UTcqOsKKYvA): done
-Day 04: done, no video, too time consuming
-Day 05: done
+* [Day 01](https://youtu.be/gmDWjQjX8KM): done
+* [Day 02](https://youtu.be/w-seroxZ4vA): done, part 2 not on video for brevity
+* [Day 03](https://youtu.be/UTcqOsKKYvA): done
+* Day 04: done, no video, too time consuming
+* Day 05: done
