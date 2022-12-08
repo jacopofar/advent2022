@@ -14,6 +14,7 @@ In the subtitles folder you can fine the subtitles, they are generated with Whis
 * [Day 02](https://youtu.be/w-seroxZ4vA): done, part 2 not on video for brevity
 * [Day 03](https://youtu.be/UTcqOsKKYvA): done
 * Day 04: done, no video, too time consuming
-* Day 05: done
-* Day 06: done
-* Day 07: done, video not ready yet
+* Day 05: done, no video
+* Day 06: done, no video
+* [Day 07](https://www.youtube.com/watch?v=CP48DR41q28): done
+* [Day 08](https://youtu.be/-baIe5VA8kQ): done
