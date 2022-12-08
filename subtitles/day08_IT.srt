@@ -1,0 +1,1716 @@
+1
+00:00:00,000 --> 00:00:06,900
+ciao a tutti e benvenuti all'Advent of Code 2022 giorno 8. Nel problema di oggi
+
+2
+00:00:06,900 --> 00:00:11,800
+abbiamo una griglia di numeri che rappresentano altezze di alberi e
+
+3
+00:00:11,800 --> 00:00:16,280
+quello che il problema ci chiede di fare è calcolare quanti di questi alberi
+
+4
+00:00:16,280 --> 00:00:21,920
+sono visibili dall'esterno. Un albero è visibile dall'esterno secondo il problema
+
+5
+00:00:21,920 --> 00:00:28,920
+quando guardando da uno dei lati in una direzione che è una delle quattro
+
+6
+00:00:28,920 --> 00:00:34,040
+direzioni cardinali posso vedere quell'albero perché non ci sono alberi
+
+7
+00:00:34,040 --> 00:00:37,880
+più alti davanti quindi per esempio tutti gli alberi sul bordo quindi prima
+
+8
+00:00:37,880 --> 00:00:43,240
+riga ultima riga e la prima e ultima colonna sono visibili per forza perché
+
+9
+00:00:43,240 --> 00:00:48,120
+non c'è niente che li copre e gli altri sono visibili se sono più alti
+
+10
+00:00:48,120 --> 00:00:53,600
+quindi per esempio questo albero qua altezza 3 è visibile perché a davanti
+
+11
+00:00:53,600 --> 00:00:59,760
+solo un albero con altezza 2 questo qui per esempio 4 non è visibile perché è
+
+12
+00:00:59,760 --> 00:01:06,520
+coperto qui dal 9 qui da 9 qui da 5 e qui da un 7 quindi chi guarda da qua
+
+13
+00:01:06,520 --> 00:01:12,440
+vede solo questo albero col 7, chi guarda da qui vede questo albero col 3 ma poi vede
+
+14
+00:01:12,440 --> 00:01:17,520
+anche questo albero col 5 perché è più alto, questo non lo vede, questo nemmeno
+
+15
+00:01:17,520 --> 00:01:24,040
+questo è il meno. Quindi quello che ci chiede calcolare è quanti
+
+16
+00:01:24,040 --> 00:01:32,240
+alberi sono visibili. Come sempre ho per far prima già inizializzato uno schede
+
+17
+00:01:32,240 --> 00:01:37,880
+tra il problema e mi sono già copiato il mio input. Oggi ho fatto una cosa furbo e
+
+18
+00:01:37,880 --> 00:01:43,160
+mi sono compiato anche l'input dell'esempio quindi posso già provare il
+
+19
+00:01:43,160 --> 00:01:48,040
+mio problema sull'esempio che c'è nella descrizione quindi vedere già se i miei
+
+20
+00:01:48,040 --> 00:01:55,120
+codici funzionano su quell'esempio. Iniziamo subito. Che cos'è questo input?
+
+21
+00:01:55,120 --> 00:02:02,880
+è una griglia quindi semplicemente mi vado a creare una lista inizialmente
+
+22
+00:02:02,880 --> 00:02:10,720
+vuota, apro questo file 08.txt perfetto anzi iniziamo direttamente dall'esempio
+
+23
+00:02:10,720 --> 00:02:20,480
+che ho chiamato sample.txt e itero su questo file quindi per ogni riga di
+
+24
+00:02:20,480 --> 00:02:29,800
+alberi quindi chiamo tree_line nell'input quindi questo fr che cosa faccio?
+
+25
+00:02:29,800 --> 00:02:35,120
+aggiungo a ret che sarà il valore di ritorno
+
+26
+00:02:35,120 --> 00:02:42,400
+questa lista che però voglio leggere sotto forma di come si chiama?
+
+27
+00:02:42,400 --> 00:02:46,160
+sotto forma di numeri non voglio ottenere delle stringhe quindi appendo che cosa?
+
+28
+00:02:46,160 --> 00:02:55,960
+l'intero parsato di questo albero quindi t for t in tree_line
+
+29
+00:02:55,960 --> 00:03:02,720
+purtroppo tree_line essendo una linea contiene anche una capo quindi me lo
+
+30
+00:03:02,720 --> 00:03:10,480
+strippo faccio strip per eliminare la capo quindi sostanzialmente una lista di
+
+31
+00:03:10,480 --> 00:03:15,560
+liste dove ogni elemento di questa lista sarà un intero che è l'altezza del
+
+32
+00:03:15,560 --> 00:03:19,840
+albero fatto questo ritorno semplicemente la
+
+33
+00:03:19,840 --> 00:03:28,120
+lista e per mio comfort ritorno anche la restituisco anche la lunghezza
+
+34
+00:03:28,120 --> 00:03:35,040
+della lista e la lunghezza della prima linea di questa lista quindi altezza
+
+35
+00:03:35,040 --> 00:03:40,040
+e larghezza di questa griglia ovviamente chi si riceve la lista può benissimo
+
+36
+00:03:40,040 --> 00:03:44,120
+fare la stessa operazione perché può semplicemente guardare la lunghezza ma io
+
+37
+00:03:44,120 --> 00:03:49,000
+non voglio di fare questo land land ret ogni volta non mi piace quindi
+
+38
+00:03:49,000 --> 00:03:54,360
+restituisco direttamente la lista e la sua dimensione in un colpo solo così
+
+39
+00:03:54,360 --> 00:04:00,760
+chi la riceve sa già qual è e non se ne è più proprio quale
+
+40
+00:04:00,760 --> 00:04:08,520
+bene quindi qual è il tipo di ritorno di questa di questa funzione una tupla che
+
+41
+00:04:08,520 --> 00:04:18,840
+contiene una lista di liste di interi e poi un intero un intero che sono la di
+
+42
+00:04:18,840 --> 00:04:27,040
+numero di righe numero di colonne quindi x e z bene questo è questo è l'input
+
+43
+00:04:27,040 --> 00:04:35,760
+adesso andiamo a fare la parte 1 ci sono vari modi farla ma in generale io
+
+44
+00:04:35,760 --> 00:04:42,440
+direi che il problema fondamentale tanto qui ho sbagliato i tipi
+
+45
+00:04:42,440 --> 00:04:52,160
+il problema fondamentale qui è che dobbiamo ottenere traccia
+
+46
+00:04:52,160 --> 00:04:56,000
+esistamente il problema è che noi potremmo fare un ciclo for e quindi per
+
+47
+00:04:56,000 --> 00:05:01,960
+ogni per esempio se quando esploriamo da sinistra a destra a destra possiamo
+
+48
+00:05:01,960 --> 00:05:06,560
+fare un ciclo for quindi per ogni riga andiamo avanti verso destra
+
+49
+00:05:06,560 --> 00:05:13,320
+vediamo il primo albero 3 per esempio anzi vediamo questa riga qui ho un 2 e
+
+50
+00:05:13,320 --> 00:05:17,720
+dico bene il 2 è il primo albero che trovo quindi sicuramente me lo tengo
+
+51
+00:05:17,720 --> 00:05:23,320
+bene 2 è ok e tengo traccia di qual è la massima altezza che ho visto finora
+
+52
+00:05:23,320 --> 00:05:29,000
+quindi 2 poi vedo il 5 dico il 5 è maggiore della massima altezza visto
+
+53
+00:05:29,000 --> 00:05:34,200
+finora che è 2 in questo caso sì quindi il 5 è visibile perché da fuori lo vedo
+
+54
+00:05:34,200 --> 00:05:39,120
+quindi me lo segno come albero visibile e aggiornò la mia massima altezza
+
+55
+00:05:39,120 --> 00:05:45,000
+trovata finora come a 5 poi vedo il terzo albero che è anche lui un 5 5 è
+
+56
+00:05:45,000 --> 00:05:50,400
+maggiore della massima altezza finora che è 5 no è uguale non è maggiore quindi
+
+57
+00:05:50,400 --> 00:05:56,920
+questo albero qui da sinistra non sarà visibile questo 5 quindi non lo segno
+
+58
+00:05:56,920 --> 00:06:03,120
+da parte vado avanti vedo l'1 vedo 2 entrambi sono minori dell'altezza massima
+
+59
+00:06:03,120 --> 00:06:07,920
+che posso accettare e quindi l'ignoro quindi essenzialmente scorro una riga o
+
+60
+00:06:07,920 --> 00:06:12,520
+una colonna tengo traccia del massimo che ho visto quindi l'albero più alto che ho
+
+61
+00:06:12,520 --> 00:06:18,720
+visto finora e vado fino alla fine contando sono gli alberi che sono più
+
+62
+00:06:18,720 --> 00:06:24,400
+alti del massimo quando trovo un massimo quel nuovo valore di massimo diventa la
+
+63
+00:06:24,400 --> 00:06:28,840
+mia nuova soglia quindi ogni albero cerca di superare il record finora e
+
+64
+00:06:28,840 --> 00:06:31,760
+questo viene fatto quattro volte quindi da sinistra a destra a destra a sinistra
+
+65
+00:06:31,760 --> 00:06:36,400
+alto basso basso alto quindi nelle quattro direzioni quindi io potrei
+
+66
+00:06:36,400 --> 00:06:43,720
+farmi un quattro cicli for ognuno che si itera righe colonne e si può fare però
+
+67
+00:06:43,720 --> 00:06:48,120
+me non piace a me questa soluzione fa schifo voglio fare una cosa più intuitiva
+
+68
+00:06:48,120 --> 00:06:55,280
+quindi cosa farò mi creerò degli oggetti che sono sostanzialmente degli
+
+69
+00:06:55,280 --> 00:07:01,480
+esploratori di questa foresta un esploratore e sostanzialmente potete
+
+70
+00:07:01,480 --> 00:07:06,080
+immaginare come un raggio di luce una una visione che ho da un certo punto della
+
+71
+00:07:06,080 --> 00:07:12,480
+foresta quindi un esploratore cosa fa è un qualcuno minino che si muove in una
+
+72
+00:07:12,480 --> 00:07:17,160
+certa direzione da un partito da un certo punto quindi si muove in una foresta va
+
+73
+00:07:17,160 --> 00:07:23,360
+avanti nella sua direzione e mi conta quanti alberi ha trovato finora che sono
+
+74
+00:07:23,360 --> 00:07:27,120
+sotto la soglia e ovviamente tiene traccia del soglia quindi un esploratore
+
+75
+00:07:27,120 --> 00:07:32,960
+è sostanzialmente una è come fare una foto da una certa non certo angolo della
+
+76
+00:07:32,960 --> 00:07:40,520
+foresta quindi creiamoci questi esploratori
+
+77
+00:07:40,520 --> 00:07:48,200
+tutto mi leggo la mia il mio input è il problema quindi che è la griglia e cos'è
+
+78
+00:07:48,200 --> 00:07:52,320
+che è questo il massimo delle x e il massimo delle y è uguale al problem input
+
+79
+00:07:52,320 --> 00:07:58,920
+quindi sto assegnando queste tre variabili per essere più contento e
+
+80
+00:07:58,920 --> 00:08:04,280
+avere già tutto dopodiché mi creerò una serie di esploratori quindi un
+
+81
+00:08:04,280 --> 00:08:12,960
+esploratore cos'è? è un set perché ha un certo numero, potrebbe anche essere una
+
+82
+00:08:12,960 --> 00:08:16,120
+lista in questo caso non è importante
+
+83
+00:08:16,120 --> 00:08:23,560
+anzi facciamo direttamente una lista. Ogni esploratore cos'è? è definito da due
+
+84
+00:08:23,560 --> 00:08:30,240
+elementi una posizione nella griglia e una direzione in cui sto andando quindi
+
+85
+00:08:30,240 --> 00:08:35,240
+faccio una dupla con quattro elementi che saranno la coordinata x e y di dove si
+
+86
+00:08:35,240 --> 00:08:50,840
+trova e la coordinata e la direzione x y di dove sta andando, ok è una lista
+
+87
+00:08:50,840 --> 00:08:56,320
+quindi per ogni esploratore avrò questi quattro valori quindi andiamo a
+
+88
+00:08:56,320 --> 00:09:08,680
+crearci. Partiamo dalla una riga quindi per ogni x che va da 0 a mx quindi il
+
+89
+00:09:08,680 --> 00:09:12,920
+massimo delle x notate che questo include lo 0 ma
+
+90
+00:09:12,920 --> 00:09:20,840
+esclude il valore massimo che è mx perché python come quasi tutti i linguaggi fa
+
+91
+00:09:20,840 --> 00:09:24,840
+partire in c da 0 quindi l'ultimo elemento in realtà non è incluso quindi
+
+92
+00:09:24,840 --> 00:09:31,520
+una lista di tre elementi avrà mx uguale a 3 ma i tre elementi avranno indice 0 1
+
+93
+00:09:31,520 --> 00:09:34,680
+e 2 non c'è il 3 e questo ci va bene perché questo è esattamente quello che
+
+94
+00:09:34,680 --> 00:09:45,600
+il range fa. Bene per ogni x aggiungiamo gli esploratori che cosa? un esploratore
+
+95
+00:09:45,600 --> 00:09:56,760
+che è una lista. Aggiungiamo un esploratore che partirà da quell'angolo x quindi
+
+96
+00:09:56,760 --> 00:10:04,000
+coordinata x sarà x perché è quello che stiamo facendo, coordinata y non sarà 0
+
+97
+00:10:04,000 --> 00:10:10,120
+perché partiamo dal bordo e poi la direzione, la direzione sarà 0 sulla 6
+
+98
+00:10:10,120 --> 00:10:13,840
+perché non si sta muovendo sulla x si muove sempre in verticale e orizzontale
+
+99
+00:10:13,840 --> 00:10:19,720
+quindi uno o due asse di mare sempre fermo e uno sull'asse y quindi
+
+100
+00:10:19,720 --> 00:10:25,720
+coordinata x sarà il valore x per cui che sto esplorando in questo for
+
+101
+00:10:25,720 --> 00:10:33,960
+coordinata y è 0 quindi parte dal bordo da una certa altezza o profondità x e
+
+102
+00:10:33,960 --> 00:10:40,960
+poi si muove aggiungendo 1 alla y quindi si muoverà in verticale
+
+103
+00:10:40,960 --> 00:10:46,280
+orizzontale, dipende da come lo visualizzate, di 1 alla volta. Poi già che ci
+
+104
+00:10:46,280 --> 00:10:50,800
+sono mi creo l'altro esploratore, il suo gemello che va nella direzione
+
+105
+00:10:50,800 --> 00:10:56,720
+opposta quindi questo parte da dove? Sempre da x ma non più dal bordo 0 ma
+
+106
+00:10:56,720 --> 00:11:07,440
+dal bordo m, y. La coordinata x in mano è fissa quindi non si muove lungo la 6x
+
+107
+00:11:07,440 --> 00:11:11,800
+ma si muove sulla 6y stavolta in direzione meno 1 quindi sostanzialmente
+
+108
+00:11:11,800 --> 00:11:16,120
+abbiamo creato due esploratori che esplorano la stessa riga o colonna a
+
+109
+00:11:16,120 --> 00:11:20,760
+seconda di come lo visualizzate partendo dall'inizio e dalla fine e
+
+110
+00:11:20,760 --> 00:11:24,320
+guardando in direzione opposta. Questo perché un albero può essere
+
+111
+00:11:24,320 --> 00:11:28,320
+visibile da una parte ma non dall'altra questo è assolutamente accettato il
+
+112
+00:11:28,320 --> 00:11:35,200
+problema. Se inizializziamo gli esploratori già nella posizione di un
+
+113
+00:11:35,200 --> 00:11:42,800
+albero che esiste qui abbiamo un problema che m, y va ridotto di 1
+
+114
+00:11:42,800 --> 00:11:49,040
+perché m, y è il numero di elementi ma l'elemento più estremo sarà m, y meno 1
+
+115
+00:11:49,040 --> 00:11:54,080
+non è m, y. Come ho detto prima se è una lista a dimensione 3
+
+116
+00:11:54,080 --> 00:12:00,320
+l'ultimo elemento è a indice 2 e non 3. Bene questo è quanto e adesso faccio la
+
+117
+00:12:00,320 --> 00:12:07,200
+stessa cosa per y quindi dico che è per y in range m, y. Stessa orgellamento
+
+118
+00:12:07,200 --> 00:12:15,760
+questo è 0, 0 è y, questo è 1 è 0 quindi la stessa cosa cambio solo gli assi
+
+119
+00:12:15,760 --> 00:12:26,440
+questo diventerà mx meno 1 questo diventa y. La direzione in questo caso è meno 1
+
+120
+00:12:26,440 --> 00:12:31,760
+è 0. Vedete che è esattamente la stessa cosa che ho fatto prima ho solo invertito
+
+121
+00:12:31,760 --> 00:12:39,600
+gli assi ed è assolutamente identico. Proviamo magari a formattare un
+
+122
+00:12:39,600 --> 00:12:47,560
+po' il codice quindi pdm run black. Ok non è cambiato molto, meglio così.
+
+123
+00:12:47,560 --> 00:12:53,640
+Questi sono gli esploratori quindi ora ho creato tutti gli esploratori che sono
+
+124
+00:12:53,640 --> 00:12:57,960
+sostanzialmente degli lumini che stanno sul bordo e si muoveranno in una certa
+
+125
+00:12:57,960 --> 00:13:01,320
+direzione. Un esploratore se ci avete fatto caso è
+
+126
+00:13:01,320 --> 00:13:07,280
+essenzialmente un vettore, ha una posizione e ha un orientamento. Quale
+
+127
+00:13:07,280 --> 00:13:15,560
+orientamento è sempre una coppia x, y dove 1 è 2 valore 0 l'altro è più 1
+
+128
+00:13:15,560 --> 00:13:20,760
+meno 1 quindi rappresentarlo con due numeri un po' uno spreco ma non stiamo
+
+129
+00:13:20,760 --> 00:13:24,800
+non ci stiamo facendo tanti problemi di efficienza
+
+130
+00:13:24,800 --> 00:13:30,360
+altrimenti non useremo python e così ho inizializzato gli esploratori e adesso
+
+131
+00:13:30,360 --> 00:13:35,520
+cosa fanno gli esploratori? Esplorano ovviamente quindi ci creeremo una bella
+
+132
+00:13:35,520 --> 00:13:40,280
+lista di alberi che sono stati trovati
+
+133
+00:13:40,280 --> 00:13:55,040
+che sarà che cosa sarà un set di duple di coordinate quindi int, di ogni albero
+
+134
+00:13:55,040 --> 00:13:59,800
+ci interessa solo se è stato trovato, se è visibile o no quindi tutto qui non
+
+135
+00:13:59,800 --> 00:14:04,320
+facciamo nient'altro e avere un set ci fa comodo perché noi
+
+136
+00:14:04,320 --> 00:14:07,440
+sappiamo che un albero può essere visibile da più direzioni
+
+137
+00:14:07,440 --> 00:14:13,440
+in effetti sicuramente gli alberi ai quattro angoli saranno visibili almeno
+
+138
+00:14:13,440 --> 00:14:18,240
+da due direzioni per forza e molti altri lo saranno in ogni caso per esempio questo 5
+
+139
+00:14:18,240 --> 00:14:24,520
+è visibile da qui da qua e basta quindi dobbiamo stare attenti al fatto che un
+
+140
+00:14:24,520 --> 00:14:29,880
+albero è visibile da più angoli e con un set questo ci viene facile perché ogni
+
+141
+00:14:29,880 --> 00:14:34,160
+volta che troviamo un albero lo aggiungiamo un set e il set in automatico ignora e
+
+142
+00:14:34,160 --> 00:14:40,600
+duplicati bene ora lavoriamo sugli esploratori per ogni esploratore lo
+
+143
+00:14:40,600 --> 00:14:44,360
+prendiamo lo mettiamo avanti finché può o meglio non lo mettiamo avanti sempre e
+
+144
+00:14:44,360 --> 00:14:51,960
+teniamo traccia di cosa trovato finora quindi dico ok per ogni x y che sono le
+
+145
+00:14:51,960 --> 00:14:58,320
+coordinate iniziali di un esploratore o x e o y che sono l'offset x e y
+
+146
+00:14:58,320 --> 00:15:07,200
+dell'esploratori in questo caso in explorers cosa facciamo lo mandiamo
+
+147
+00:15:07,200 --> 00:15:10,760
+avanti finché si può quindi finché non non esce dal bordo della mappa
+
+148
+00:15:10,760 --> 00:15:19,520
+sensamente quindi finché si può mi devi dire che cosa mi devi dire che il
+
+149
+00:15:19,520 --> 00:15:30,960
+nuovo albero quindi il candidato albero sarà che cosa beh è l'albero attuale
+
+150
+00:15:30,960 --> 00:15:39,640
+quindi grid di x y e diciamo che se questo albero è più alto trovato finora
+
+151
+00:15:39,640 --> 00:15:50,920
+quindi il candidate 3 è maggiore di massima altezza aggiungiamo la massima
+
+152
+00:15:50,920 --> 00:15:56,440
+altezza per diventare quella nuova del candidato quindi ogni volta che trovo un
+
+153
+00:15:56,440 --> 00:16:01,240
+nuovo record una nuova massima altezza me la segno perché quella diventerà la
+
+154
+00:16:01,240 --> 00:16:05,280
+nuova soglia e poi visto che ho trovato un albero più alto della massima altezza
+
+155
+00:16:05,280 --> 00:16:13,880
+ovviamente me lo segno come albero visibile quindi found trees dot add x x
+
+156
+00:16:13,880 --> 00:16:18,240
+la massima altezza qui non è inizializzata quindi diciamo che quando
+
+157
+00:16:18,240 --> 00:16:24,240
+partiamo ad esplorare un quando un esploratore parte ha già una massima
+
+158
+00:16:24,240 --> 00:16:28,600
+altezza che è meno uno inizialmente quindi inizialmente accetta tutto perché
+
+159
+00:16:28,600 --> 00:16:36,280
+ogni albero ha altezza positiva e poi va avanti si trova il nuovo albero se
+
+160
+00:16:36,280 --> 00:16:40,520
+è maggiore dell'altezza massima trovata finora se lo segna la parte e aggiorna
+
+161
+00:16:40,520 --> 00:16:45,080
+l'altezza massima qui alla riga 25 così che la prossima volta che trova lo
+
+162
+00:16:45,080 --> 00:16:51,240
+stesso albero non che trova un albero di questa altezza non ignora solo uno è
+
+163
+00:16:51,240 --> 00:16:56,240
+visibile e poi ovviamente dopo aver fatto questa operazione dobbiamo muoverci
+
+164
+00:16:56,240 --> 00:17:05,160
+quindi dobbiamo dire che x e y saranno uguali a x più o x e y più o y quindi
+
+165
+00:17:05,160 --> 00:17:11,040
+aggiungiamo l'offset x e y e muoviamo l'esploratore in una casella nella
+
+166
+00:17:11,040 --> 00:17:17,240
+direzione che ci interessa quando è che si esce da questo
+
+167
+00:17:17,240 --> 00:17:24,400
+y si esce quando l'esploratore ha raggiunto il bordo opposto come facciamo
+
+168
+00:17:24,400 --> 00:17:27,960
+a sapere che si raggiunge il bordo opposto
+
+169
+00:17:28,320 --> 00:17:32,000
+possiamo fare un bel list quindi controllare che le coordinate siano
+
+170
+00:17:32,000 --> 00:17:38,000
+all'interno della della griglia oppure possiamo contare sul fatto che
+
+171
+00:17:38,000 --> 00:17:42,120
+python ci darà un bel errore quando cerchiamo di leggere un albero che è
+
+172
+00:17:42,120 --> 00:17:45,880
+fuori dalla griglia quindi per un momento lo ignoro quando lo eseguirò mi
+
+173
+00:17:45,880 --> 00:17:50,760
+darà un errore e aggiungirò una bella eccezione quindi metto solo un to do
+
+174
+00:17:50,760 --> 00:18:02,000
+gestire eccezione per l'out of bound bene bene bene a questo punto la
+
+175
+00:18:02,000 --> 00:18:07,920
+soluzione del problema è la lunghezza degli alberi del set con gli alberi
+
+176
+00:18:07,920 --> 00:18:20,400
+trovati è giusto sì credo spero ho già sto già eseguendo il codice d'esempio
+
+177
+00:18:20,400 --> 00:18:25,320
+quindi dico che pdm run legge legge già che ci siamo
+
+178
+00:18:25,320 --> 00:18:38,960
+pdm run mypy strig perché no ok e eseguiamoci questa cosa quindi python
+
+179
+00:18:38,960 --> 00:18:47,640
+add 2022 day 08 ok abbiamo avuto l'errore che ci
+
+180
+00:18:47,640 --> 00:18:52,680
+aspettavamo di avere questo index error ci sta dicendo che stiamo cedendo
+
+181
+00:18:52,680 --> 00:18:58,120
+all'albero che fuori dal che fuori dalla foresta questo è il caso in cui
+
+182
+00:18:58,120 --> 00:19:06,760
+vogliamo finire l'esplorazione quindi dico ok tra questa cosa qui except cos'è
+
+183
+00:19:06,760 --> 00:19:14,720
+un index error quando abbiamo un index error break quindi perché siamo fuori
+
+184
+00:19:14,720 --> 00:19:30,000
+dalla foresta quindi eseguiamo di nuovo questa cosa e otteniamo 21 questo è l'input
+
+185
+00:19:30,000 --> 00:19:38,480
+di esempio 21 era il valore che volevamo perfetto quindi ce lo possiamo fare
+
+186
+00:19:38,480 --> 00:19:45,120
+anche per il mio vero esempio quindi eseguo la soluzione del mio
+
+187
+00:19:45,120 --> 00:19:52,960
+problema è 1719 ovviamente questo cambia in base all'account perfetto trovato
+
+188
+00:19:52,960 --> 00:20:10,160
+andiamo alla parola per la parte 2 ok di voglio sapere
+
+189
+00:20:10,160 --> 00:20:14,640
+vogliono sapere vogliono essere in grado di vedere un sacco di alberi per un
+
+190
+00:20:14,640 --> 00:20:19,640
+usuario a distanza la view in distra non so neanche come dirlo in italiano da un
+
+191
+00:20:19,640 --> 00:20:25,840
+certo albero guardiamo nel quattro direzioni e ci fermiamo se troviamo il
+
+192
+00:20:25,840 --> 00:20:32,960
+bordo della mappa o un albero che più alto o alla stessa
+
+193
+00:20:32,960 --> 00:20:39,200
+sezza quindi che non è più basso dell'albero attuale che mi interessa
+
+194
+00:20:39,200 --> 00:20:53,440
+agliefi non interessa trovare alberi stanti più alti quali trovate finora
+
+195
+00:20:53,440 --> 00:21:02,640
+quindi l'albero proposta da casa sull'albero proposta a large eaves che
+
+196
+00:21:02,640 --> 00:21:11,120
+non ho idea di cosa sia ma ok è il cornicione e la sporgenza del tetto
+
+197
+00:21:13,680 --> 00:21:19,040
+ok quindi per esempio guardiamo il 5 nella non ho ben capito cosa vogliono
+
+198
+00:21:19,040 --> 00:21:24,120
+fare comunque nell'esempio sopra guarda il 5 che sta in mezzo questo qua che è
+
+199
+00:21:24,120 --> 00:21:29,720
+evidenziato guardando sopra vede un albero perché la vista non è bloccata
+
+200
+00:21:29,720 --> 00:21:33,680
+perfetto guardando a sinistra la vista è bloccata subito
+
+201
+00:21:33,680 --> 00:21:42,720
+perché c'è un altro 5 perfetto quindi conta un albero visto qua un albero
+
+202
+00:21:42,720 --> 00:21:51,800
+visto qui a destra vede due alberi sono tutti e due più bassi e in basso vede
+
+203
+00:21:51,800 --> 00:21:58,760
+che cosa 1 2 alberi perfetto quindi soltanto per un albero possiamo vedere
+
+204
+00:21:58,760 --> 00:22:07,200
+nelle quattro direzioni che cosa si trova inteso come alberi che hanno una
+
+205
+00:22:07,200 --> 00:22:12,680
+lunghezza che è un'altezza che è inferiore o uguale all'albero attuale
+
+206
+00:22:12,680 --> 00:22:23,080
+quindi lo score scenico di un albero è il prodotto di questi quattro valori
+
+207
+00:22:23,080 --> 00:22:38,920
+beh che cosa strana e bene quindi la vista è bloccata dai due alberi ok quindi
+
+208
+00:22:38,920 --> 00:22:44,840
+quello che ci sta che ci sta chiedendo è per ogni albero della mappa trovare
+
+209
+00:22:44,840 --> 00:22:54,680
+tutti e trovare la quantità di alberi che posso vedere nelle quattro direzioni e
+
+210
+00:22:54,680 --> 00:23:00,680
+fare cosa moltiplicarle tra di loro e trovare l'albero col massimo score
+
+211
+00:23:00,680 --> 00:23:05,720
+scenico quindi questo è un problema totalmente diverso da quella parte prima
+
+212
+00:23:05,720 --> 00:23:12,400
+quindi non ce ne frega quasi nulla quasi perché questa logica degli
+
+213
+00:23:12,400 --> 00:23:20,080
+esploratori si può utilizzare parte 2 che cosa fa
+
+214
+00:23:20,480 --> 00:23:24,160
+riceve di nuovo la griglia
+
+215
+00:23:28,320 --> 00:23:34,000
+riceve di nuovo ha di nuovo un liste esploratori però non credo che vada
+
+216
+00:23:34,000 --> 00:23:36,640
+usata subito
+
+217
+00:23:36,640 --> 00:23:45,240
+bene ci facciamo un bel for su tutti i valori su di possibili esploratori
+
+218
+00:23:45,240 --> 00:23:56,560
+quindi per ogni su di possibili alberi scusate per x che sta in x per y che
+
+219
+00:23:56,560 --> 00:24:05,720
+sta nel range di m y sappiamo già che gli alberi che sono sulla griglia sono in
+
+220
+00:24:05,720 --> 00:24:12,960
+realtà hanno score 0 quindi sicuramente non contano quindi posso ignorarli
+
+221
+00:24:17,080 --> 00:24:22,240
+perché sicuramente gli alberi che sono sul bordo si possono ignorare a questo
+
+222
+00:24:22,240 --> 00:24:30,040
+punto ho un candidato albero x y e voglio trovare lo score scenico lo score
+
+223
+00:24:30,040 --> 00:24:38,880
+scenico me lo trovo in una funzione a parte quindi max score equal 0
+
+224
+00:24:38,880 --> 00:24:50,800
+inizialmente e mi riguarda se il max score per la griglia alla coordinata x y
+
+225
+00:24:50,800 --> 00:25:00,240
+è maggiore di max score pessimo se ne score perché è una funzione voglio
+
+226
+00:25:00,240 --> 00:25:07,800
+dare il nuovo diverso consider al massimo anzi faccio così mi dico guarda
+
+227
+00:25:07,800 --> 00:25:18,560
+farmi direttamente il massimo dello scenic score per ogni x e y che c'è qua
+
+228
+00:25:18,560 --> 00:25:23,400
+dentro quindi non sto a fargli ovviamente la non ha senso creare una
+
+229
+00:25:23,400 --> 00:25:28,480
+variabile che inizializzala faccio italo sulla lista e mi trovo il massimo
+
+230
+00:25:28,480 --> 00:25:34,560
+perfetto che cos'è lo scenic score
+
+231
+00:25:36,760 --> 00:25:48,200
+lo scenic score è il valore di un certo albero quindi dato una coordinata x y
+
+232
+00:25:48,200 --> 00:25:54,800
+ci darà un intero lo tengo una funzione a parte perché così posso testarla a
+
+233
+00:25:54,800 --> 00:25:59,080
+parte con gli esempi del problema
+
+234
+00:26:00,520 --> 00:26:14,000
+bene che cos'è lo scenic score di un certo albero è il prodotto dei quattro
+
+235
+00:26:14,000 --> 00:26:23,320
+alberi che posso trovare nelle quattro direzioni quindi mi creo che cosa
+
+236
+00:26:23,320 --> 00:26:34,800
+vado a vedere le quattro direzioni quindi for o x o y nella lista che contiene
+
+237
+00:26:34,800 --> 00:26:55,920
+che cosa 0 1 0 1 0 meno 1 1 0 e meno 1 0 quindi per ogni possito in una delle
+
+238
+00:26:55,920 --> 00:27:02,120
+quattro direzioni che rappresenti questo modo come prima vado avanti e conto
+
+239
+00:27:02,120 --> 00:27:15,880
+quanti alberi ho trovato quindi visible count inizialmente sarà 0 e a questo
+
+240
+00:27:15,880 --> 00:27:23,600
+punto dico ok vai avanti quindi stessa logica di prima
+
+241
+00:27:23,600 --> 00:27:32,080
+in effetti posso proprio copiarla ma sì perché non copiarci una roba così
+
+242
+00:27:36,480 --> 00:27:42,640
+quindi cosa abbiamo? abbiamo visible count è 0 massima altezza inizialmente meno 1
+
+243
+00:27:42,640 --> 00:27:52,080
+proviamo a andare avanti l'albero candidato sarà inizialmente non x e y
+
+244
+00:27:52,080 --> 00:27:58,080
+bensì quello dopo
+
+245
+00:27:58,080 --> 00:28:06,040
+vediamo sì perché la vista qua c'è una piccola differenza perché la vista si
+
+246
+00:28:06,040 --> 00:28:12,200
+aggiunge prima quindi prima contro il primo albero quindi x più x e y saranno
+
+247
+00:28:12,200 --> 00:28:15,840
+incrementati subito l'albero candidato è quello che sto
+
+248
+00:28:15,840 --> 00:28:20,800
+vedendo quindi l'albero subito attaccato se l'albero candidato è maggiore all'altezza
+
+249
+00:28:20,800 --> 00:28:28,040
+massima mi aggiungo l'altezza massima e aggiungo anche il numero di alberi
+
+250
+00:28:28,040 --> 00:28:35,760
+visibili quindi non ho più il set ma ho questo valore che viene incrementato di 1
+
+251
+00:28:35,760 --> 00:28:43,800
+altrimenti siamo fuori la griglia e basta se qui c'è però una piccola
+
+252
+00:28:43,800 --> 00:28:52,760
+differenza perché se l'albero non è non raggiunge l'altezza massima mi fermo
+
+253
+00:28:52,760 --> 00:28:58,680
+perché a me interessa trovare il primo albero che è più alto a no scusate
+
+254
+00:28:58,680 --> 00:29:06,080
+scemo io non esiste più l'altezza massima qui a me interessa in realtà il problema più
+
+255
+00:29:06,080 --> 00:29:13,240
+semplice perché a me interessa l'altezza massima che è quella dell'albero
+
+256
+00:29:13,240 --> 00:29:20,760
+stesso su cui sto quindi il max a sarà grid alla coordinata x e y
+
+257
+00:29:20,760 --> 00:29:28,320
+l'altezza massima non viene mai aggiornata è una soglia e quindi dico
+
+258
+00:29:28,320 --> 00:29:38,200
+guarda se l'albero è più alto dell'altezza massima me lo metti visibile
+
+259
+00:29:38,200 --> 00:29:44,680
+no scusate se l'albero è minore dell'altezza massima lo conti altrimenti basta se è
+
+260
+00:29:44,680 --> 00:29:49,480
+finita qui non c'è nessun ragionamento ulteriore da fare
+
+261
+00:29:49,480 --> 00:29:52,560
+dopodiché
+
+262
+00:29:53,440 --> 00:30:00,800
+distances che sarà la lista alla fine di tutto questo giro viene incrementata di
+
+263
+00:30:00,800 --> 00:30:11,440
+aggiungiamo la che cos'è l'altezza trovata quindi visibolt account e dopo il
+
+264
+00:30:11,440 --> 00:30:16,440
+ciclo che ha esplorato tutte quattro le lezioni ritorniamo se mai esiste la
+
+265
+00:30:16,440 --> 00:30:19,240
+funzione product
+
+266
+00:30:19,240 --> 00:30:23,240
+no
+
+267
+00:30:27,200 --> 00:30:30,200
+anche fastidio
+
+268
+00:30:31,400 --> 00:30:34,640
+massica c'è la funzione product no non c'è
+
+269
+00:30:34,640 --> 00:30:50,360
+byton product mi sembra strano non me lo ricordo o che brutta cosa questi
+
+270
+00:30:50,360 --> 00:31:01,160
+ancora usano ha fatto 2.7 in questa risposta del 2010 ma si dai ci sarà un
+
+271
+00:31:01,160 --> 00:31:14,040
+tucchettone non voglio farmi sì ok fa schifo va bene
+
+272
+00:31:14,040 --> 00:31:26,440
+ritorniamo che cosa facciamo così brutta cosa ma funziona nord sud anzi abc di
+
+273
+00:31:26,440 --> 00:31:35,040
+perfetto brutto come la fame ma funziona è uguale alla lista di stanze e
+
+274
+00:31:35,040 --> 00:31:47,520
+ritorniamo a per b per c per d me lo formato con black ed è fatto
+
+275
+00:31:49,520 --> 00:31:54,160
+funzionerà questa cosa secondo me no è difficile che una cosa e gene funzioni al
+
+276
+00:31:54,160 --> 00:32:02,240
+primo colpo ma lo dobbiamo abbiamo nove o no questo era otto
+
+277
+00:32:02,600 --> 00:32:08,320
+interessante proviamo direttamente facciamo la cosa intelligente visto che
+
+278
+00:32:08,320 --> 00:32:13,680
+abbiamo già la funzione che calcola lo scenic sco verifichiamo che funzioni per
+
+279
+00:32:13,680 --> 00:32:22,120
+il caso che ci dà il problema quindi lo scenic sco di 4 no scusate della
+
+280
+00:32:22,120 --> 00:32:24,840
+posizione
+
+281
+00:32:25,520 --> 00:32:29,120
+ok proviamo per questo per esempio
+
+282
+00:32:34,640 --> 00:32:46,040
+mi stampo lo scenic sco or di cosa del problem input 0 quindi la griglia stessa
+
+283
+00:32:46,040 --> 00:32:59,240
+per la coordinata 1 2 e 4
+
+284
+00:33:00,240 --> 00:33:05,760
+che è quello che ci dice il problema perfetto proviamo la seconda possibilità
+
+285
+00:33:05,760 --> 00:33:23,440
+quindi questa volta la coordinata 0 1 2 3 2 ed è uno scenic score... ok questo è
+
+286
+00:33:23,440 --> 00:33:32,280
+sbagliato perché lo scenic scor qui deve essere che cosa deve essere 8 quindi
+
+287
+00:33:32,280 --> 00:33:39,040
+vediamo un po' quali sono gli scenic scor che abbiamo qui quindi print
+
+288
+00:33:39,040 --> 00:33:41,840
+distanzi
+
+289
+00:33:44,280 --> 00:33:54,360
+1 1 1 1 interessante magari mi commento la parte 2 per evitare il rumore
+
+290
+00:33:54,360 --> 00:34:04,480
+nell'output 1 1 1 1 questo è strano
+
+291
+00:34:04,480 --> 00:34:08,560
+perché lo scenic scor
+
+292
+00:34:14,360 --> 00:34:20,720
+ho capito cosa succede qui
+
+293
+00:34:20,720 --> 00:34:29,880
+siamo sicuri aver preso quello giusto 0 1 2 3 0 1 2 si è giusto molto
+
+294
+00:34:29,880 --> 00:34:41,680
+interessante quindi l'altezza massima qui sarà 5 perfetto
+
+295
+00:34:41,680 --> 00:34:49,720
+distanza non c'è quindi diciamo che per ogni nuovo valore quindi x y non che
+
+296
+00:34:49,720 --> 00:34:57,640
+sale di non c'è la direzione avremo che cosa che se questo è minore
+
+297
+00:34:57,640 --> 00:35:04,640
+l'altezza massima aggiungiamo aggiungiamo di 1 aggiungiamo 1 al
+
+298
+00:35:04,640 --> 00:35:11,880
+ho capito il problema è un problema di off by 1 che è il problema più comune
+
+299
+00:35:11,880 --> 00:35:18,120
+dell'informatica quello che sta succedendo è che io controllo che raggiunga
+
+300
+00:35:18,120 --> 00:35:26,160
+l'altezza massima e se non raggiunge non incremento nemmeno mi fermo ma in realtà
+
+301
+00:35:26,160 --> 00:35:32,640
+l'albero su cui finisce l'altezza massima va considerato quindi qui dovrei fare
+
+302
+00:35:32,640 --> 00:35:40,320
+cosa dovrei dirgli ok trovato il 3 è bene l'altro 3 va bene lo stesso
+
+303
+00:35:40,320 --> 00:35:47,560
+questi due valori devo considerare invece qui succede che se io vado a
+
+304
+00:35:47,560 --> 00:35:54,320
+contare il 3 per esempio il 3 va bene e il 5 non va bene perché non è
+
+305
+00:35:54,320 --> 00:35:59,320
+inferiore all'altezza massima ma comunque è un albero che vedo quindi
+
+306
+00:35:59,320 --> 00:36:05,720
+sono due in questa direzione non uno qui stessa cosa sono due gli alberi che vedo
+
+307
+00:36:05,720 --> 00:36:13,760
+qui è uno qui sono due questo 2 in realtà non lo capisco perché dovrebbe
+
+308
+00:36:13,760 --> 00:36:17,680
+comunque apparire nel mio problema quindi ho due errori separati iniziamo
+
+309
+00:36:17,680 --> 00:36:29,200
+corregere uno quindi diciamo che questa operazione la faccio lo stesso quindi ho
+
+310
+00:36:29,200 --> 00:36:34,720
+sempre un albero visibile ma se quell'albero è anche maggiore o uguale
+
+311
+00:36:34,720 --> 00:36:40,280
+altezza massima mi fermo quindi la condizione è un po' più semplice ora
+
+312
+00:36:40,280 --> 00:36:52,480
+bene ora ora è troppo alto e già che ci sono mi provo entrambi i valori
+
+313
+00:36:52,480 --> 00:37:03,160
+raccomandati che sono 1 e 2 quindi provo entrambi entrambi problemi entrambi
+
+314
+00:37:03,160 --> 00:37:13,480
+valori suggeriti dal problema 36 16 qui proprio numeri altissimi ok perché
+
+315
+00:37:13,480 --> 00:37:34,240
+vediamo col primo numero noi dovremo avere 1 1 2 2 quindi questo 5 abbiamo che quindi
+
+316
+00:37:34,240 --> 00:37:44,560
+abbiamo un 3 certo perché il bordo va ignorato quindi il bordo non lo conti
+
+317
+00:37:44,560 --> 00:37:50,000
+non lo conto quindi questo visible trick out lo metto qui
+
+318
+00:37:50,000 --> 00:38:19,320
+ok provo a spiegare qual è il problema il problema è che l'albero su cui vado
+
+319
+00:38:19,320 --> 00:38:24,840
+se io mi sono da quest'albero qui guardo per esempio verso destra vedo due alberi
+
+320
+00:38:24,840 --> 00:38:30,400
+quindi ho contare tutti gli alberi che sono più bassi di me fino al bordo se
+
+321
+00:38:30,400 --> 00:38:35,160
+guardo a sinistra vedo subito un albero che ferma la mia vista quindi conta solo
+
+322
+00:38:35,160 --> 00:38:41,840
+questo ma prima io non lo contavo fatto perché controllavo l'altezza prima di
+
+323
+00:38:41,840 --> 00:38:47,160
+incrementare il numero ma l'albero che vedo che è un ostacolo è già di per sé
+
+324
+00:38:47,160 --> 00:38:52,120
+un valore che devo contare quindi questo è già uno non zero come prima quindi
+
+325
+00:38:52,120 --> 00:38:56,600
+devo trovare un modo di contare gli alberi nel momento giusto quindi
+
+326
+00:38:56,600 --> 00:39:04,040
+inizialmente ne vedo 0 se sono andando se sto andando fuori dalla griglia o
+
+327
+00:39:04,040 --> 00:39:08,560
+tengo un'eccezione quindi non arrivo mai a questo conteggio incrementare
+
+328
+00:39:08,560 --> 00:39:15,360
+altrimenti se sto trovando un ostacolo me lo conto se non lo sto trovando
+
+329
+00:39:15,360 --> 00:39:18,320
+comunque lo conto
+
+330
+00:39:18,960 --> 00:39:26,320
+bene questo è probabilmente giusto vediamo 24 8 che qua c'è un problema
+
+331
+00:39:26,320 --> 00:39:34,480
+ora il primo sta funzionando, scusate il secondo sta funzionando è 8 ma il
+
+332
+00:39:34,480 --> 00:39:53,360
+primo mi sta dando dei valori che davvero non ha nessun senso quindi vediamo
+
+333
+00:39:53,360 --> 00:40:05,160
+l'altezza 5 1 1 2 2 è davvero una cosa che non ha nessun senso perché sono
+
+334
+00:40:05,160 --> 00:40:10,240
+giusti qua gli indici sì questo è un errore che faccio spesso quando si fa
+
+335
+00:40:10,240 --> 00:40:16,920
+questa cosa è facile per errore mettere una x o una y non invertite ok qui c'è
+
+336
+00:40:16,920 --> 00:40:23,760
+qualcosa estremamente stupido che sto sbagliando proprio in maniera cretina
+
+337
+00:40:24,240 --> 00:40:37,360
+ok dunque ho una x y che sono, parlo del primo albero che vedo quindi x y e dico
+
+338
+00:40:37,360 --> 00:40:43,840
+ok sì quindi qua ci sono tre casi che è
+
+339
+00:40:43,840 --> 00:40:50,080
+l'albero l'albero che sto guardando è più basso l'albero che sto guardando è
+
+340
+00:40:50,080 --> 00:40:56,360
+fuori dal bordo e l'albero che sto guardando è un ostacolo quindi è
+
+341
+00:40:56,360 --> 00:41:03,160
+maggiore o uguale quindi le condizioni sono tre questo index error che quando
+
+342
+00:41:03,160 --> 00:41:06,640
+siamo fuori della griglia siamo fuori la griglia questo albero x y
+
+343
+00:41:06,640 --> 00:41:13,440
+non lo consideriamo se siamo dentro la griglia allora abbiamo due casi cioè
+
+344
+00:41:13,440 --> 00:41:21,120
+questo else lo metto per essere esplicito poi magari lo tolgo, cioè o l'albero che stiamo
+
+345
+00:41:21,120 --> 00:41:25,800
+guardando è un ostacolo e allora lo conto ma poi esco dal ciclo perché non voglio
+
+346
+00:41:25,800 --> 00:41:34,040
+più contare altri alberi oppure l'albero che stiamo guardando non è più alto
+
+347
+00:41:34,040 --> 00:41:38,200
+quindi non è un ostacolo quindi me lo conto ma vado avanti ma non faccio
+
+348
+00:41:38,200 --> 00:41:47,720
+nessun break vado avanti anche nel ciclo bene questo si può fare a senso quindi
+
+349
+00:41:47,720 --> 00:41:51,800
+cos'è che sto sbagliando perché questa cosa non funziona mi dà valori cosi
+
+350
+00:41:51,800 --> 00:41:59,880
+strani 2322 da dove cavolo ha tirato fuori intanto il secondo funziona quindi
+
+351
+00:41:59,880 --> 00:42:18,720
+2322 ok partiamo dal dal primo che è 2 quindi per o x o y che è 0 1 quindi aumenta la y
+
+352
+00:42:18,720 --> 00:42:42,280
+avremo initialmente visible tree count a 0 x y diventerà non più 1 2 bensì 1 3 quindi
+
+353
+00:42:42,280 --> 00:42:49,960
+stiamo muovendosi ci stiamo vendo di qua e questo valore è corretto quindi in
+
+354
+00:42:49,960 --> 00:42:56,600
+realtà non stiamo nemmeno a pensarci questo valore questo 3 è sbagliato quindi
+
+355
+00:42:56,600 --> 00:43:06,200
+abbiamo visible tree count che è 0 andiamo a sottrarre di 1 quindi avremo questa
+
+356
+00:43:06,200 --> 00:43:13,720
+coordinata questa coordinata è maggiore o uguale dell'altezza massima sì quindi
+
+357
+00:43:13,720 --> 00:43:25,280
+contiamo l'albero e usciamo dal ciclo giusto sì quindi avremo queste distanze
+
+358
+00:43:25,280 --> 00:43:31,920
+che questa distanza che cresce quindi perché cavolo stiamo crescendo qui
+
+359
+00:43:31,920 --> 00:43:39,760
+questa bella domanda e lo verifichiamo con un bel break point quindi ora di
+
+360
+00:43:39,760 --> 00:43:46,160
+usare al debugger quindi lo eseguo
+
+361
+00:43:47,160 --> 00:43:54,660
+bene siamo nella prima condizione quindi mi
+
+362
+00:43:54,660 --> 00:44:04,200
+printo o x o y 0 1 ma questo sappiamo già che è corretto quindi
+
+363
+00:44:04,200 --> 00:44:33,480
+ok quindi qui le distanze state trovate quindi se printo distanze
+
+364
+00:44:34,440 --> 00:44:41,200
+trovo la prima distanza no? ah no lo sta appenendo adesso ok quindi aprimi
+
+365
+00:44:41,200 --> 00:44:47,360
+distanze 2 ma questo è corretto perché siamo nel caso 0 1 quindi la y non sta
+
+366
+00:44:47,360 --> 00:44:52,080
+venendo incrementata e da questo albero vedo due alberi no problemo questo è
+
+367
+00:44:52,080 --> 00:45:06,880
+corretto ora sono nell'altro caso più bello che è quello che ci rompe perché
+
+368
+00:45:06,880 --> 00:45:12,680
+o x o y non sono 0 meno 1 quindi vuol dire che sta andando verso sinistra e qui
+
+369
+00:45:12,680 --> 00:45:19,160
+ci dovrebbe subito e qui è il caso in cui dovrebbe subito fermarsi quindi
+
+370
+00:45:19,160 --> 00:45:26,560
+dovrebbe subito vedere che siamo a un, abbiamo trovato un ostacolo a fermarsi quindi
+
+371
+00:45:26,560 --> 00:45:35,560
+vado avanti ok qua c'è while true perfetto aggiornano le coordinate quindi
+
+372
+00:45:35,560 --> 00:45:40,560
+se ora printo x y devo vedere le coordinate di questo ostacolo che sono
+
+373
+00:45:40,560 --> 00:45:54,440
+1 1 1 4 what? scusate ma che cazzo è stato
+
+374
+00:45:54,440 --> 00:46:13,920
+succedendo ok ah che deficiente ma certo ah scemo io ok è ovvio cosa
+
+375
+00:46:13,920 --> 00:46:20,160
+succedendo questo x io lo sto andando a modificare ma al ciclo dopo questo è
+
+376
+00:46:20,160 --> 00:46:24,120
+python si ricorda che cos'era perché non lo sto resetando quindi questo
+
+377
+00:46:24,120 --> 00:46:27,960
+ogni volta che iterò si ricorda le coordinate di prima che ovviamente è
+
+378
+00:46:27,960 --> 00:46:36,200
+sbagliato quindi ok questo era il problema quindi dico ok le coordinate da
+
+379
+00:46:36,200 --> 00:46:48,040
+esplorare saranno e x e y che sta per esplora x e esplora y quindi e x e y
+
+380
+00:46:48,040 --> 00:46:57,200
+è lo uguale x y e a questo punto per ogni ciclo uso x e y non più x e y
+
+381
+00:46:58,000 --> 00:47:02,200
+perché ogni volta devono essere resettate altrimenti alla prossima
+
+382
+00:47:02,200 --> 00:47:07,920
+interazione mi becco di nuovo sta roba qui perfetto ora c'è un bel ciclo
+
+383
+00:47:07,920 --> 00:47:12,120
+infinito quindi non ho idea di cosa cacchio stai facendo
+
+384
+00:47:12,120 --> 00:47:19,720
+ah sì certo qua è x e y ovviamente mi sono dimenticato di sostituire tutte ok
+
+385
+00:47:19,720 --> 00:47:27,960
+ora è sbagliato ma in una maniera nuova e interessante quindi va bene ma
+
+386
+00:47:27,960 --> 00:47:37,240
+siamo comunque a una situazione un po' più che strano un bel problema quindi mi
+
+387
+00:47:37,240 --> 00:47:47,560
+faccio un altro break point vediamo un po' questo primo caso deve essere 3 2
+
+388
+00:47:47,560 --> 00:48:01,240
+quindi andiamo a lavorarci faccio un break point qui il primo è 0 1 quindi
+
+389
+00:48:01,240 --> 00:48:10,720
+incremento la coordinata y quindi questo deve essere 2 e ci sta il secondo è 0
+
+390
+00:48:10,720 --> 00:48:18,300
+meno 1 quindi va verso sinistra questo deve essere 1 e ci sta poi 1 0 quindi va
+
+391
+00:48:18,300 --> 00:48:28,640
+verso l'alto qui è 1 e non ci sta questo è il problema quindi questo 1 non va
+
+392
+00:48:28,640 --> 00:48:36,920
+bene e poi abbiamo che cosa meno 1 0 che pure non va bene quindi sta contando a
+
+393
+00:48:36,920 --> 00:48:49,000
+quanto pare sta contando troppo quindi un break point
+
+394
+00:48:49,000 --> 00:48:59,880
+questo va bene quindi il primo sono qui nella prima interazione 0 1 abbiamo il
+
+395
+00:48:59,880 --> 00:49:06,160
+valore corretto quindi stiamo aumentando la y non stiamo andando verso destra e
+
+396
+00:49:06,160 --> 00:49:12,880
+abbiamo 2 nella distanza 2 quindi questo ci va bene poi andiamo verso sinistra qui
+
+397
+00:49:12,880 --> 00:49:19,360
+la distanza dovrebbe essere pure 2 perché stiamo vedendo 2 e 5 ah no scusate qui la
+
+398
+00:49:19,360 --> 00:49:32,600
+distanza pure corretta perché è 1 quindi ok quindi continuo continuo di nuovo
+
+399
+00:49:32,600 --> 00:49:40,360
+quindi ora sono ho trovato due distanze 2 e 1 che sono corrette a destra e
+
+400
+00:49:40,360 --> 00:49:51,520
+sinistra e ora ho x e y 1 0 quindi vuol dire che sto aumentando la x stanno
+
+401
+00:49:51,520 --> 00:49:57,600
+verso l'alto il valore che mi aspetto di trovare è 1 e basta mentre invece quello
+
+402
+00:49:57,600 --> 00:50:06,120
+che ho tenuto prima era 2 quindi c'è qualche problema quindi esplorazione di x
+
+403
+00:50:06,120 --> 00:50:19,000
+esplorazione di y non sono stanno vedendo l'acella 1 2 ok ma al prossimo
+
+404
+00:50:19,000 --> 00:50:28,960
+giro mi vedranno che cosa 2 2 perché questo sta andando verso il basso è
+
+405
+00:50:28,960 --> 00:50:48,680
+corretto e x e y quindi sta aumentando la x ok giusto sta andando verso il basso
+
+406
+00:50:48,680 --> 00:50:57,800
+quindi mi ha trovato forse è corretto 1 2 è corretto quindi in realtà non me ne
+
+407
+00:50:57,800 --> 00:51:03,120
+frega niente dico vai avanti
+
+408
+00:51:04,400 --> 00:51:13,680
+bene quindi ora distanze mi ha trovato 2 1 2 che sono 1 2 1 1 2 perfetto questo è
+
+409
+00:51:13,680 --> 00:51:19,120
+corretto ora sta andando verso l'alto quindi questa è la parte dove prima avevo
+
+410
+00:51:19,120 --> 00:51:24,720
+il problema perché andando verso l'alto devo trovarsi un solo valore invece mi
+
+411
+00:51:24,720 --> 00:51:34,680
+trova 3 che non ha senso ha ho capito perché ho capito cosa
+
+412
+00:51:34,680 --> 00:51:44,320
+sta succedendo pirla io il problema è che in python gli indici negativi non sono
+
+413
+00:51:44,320 --> 00:51:51,480
+fuori dalla non sono fuori la griglia bensì sono un modo di accedere dalla
+
+414
+00:51:51,480 --> 00:51:56,920
+fine quindi quando io dico quando io qui mi trovo una x e y che sono negativi
+
+415
+00:51:56,920 --> 00:52:04,080
+come in questo caso python non si lamenta perché dire grid di meno 1 vuol
+
+416
+00:52:04,080 --> 00:52:09,080
+dire prendimi l'ultima riga non vuol dire vai fuori dai confini quindi devo
+
+417
+00:52:09,080 --> 00:52:27,000
+dirgli guarda che noia ok quindi dico guarda if x-0 or e y-0
+
+418
+00:52:27,000 --> 00:52:40,280
+sparami un bel indexer ok questo è il problema perché quando la
+
+419
+00:52:40,280 --> 00:52:50,520
+griglia è quando uno negativo esco quindi ho qui questo è 4 giusto si 2 2
+
+420
+00:52:50,520 --> 00:52:59,000
+1 1 vediamo anche l'altro per sicurezza questo problema forse esisteva anche
+
+421
+00:52:59,000 --> 00:53:02,720
+questo è 8 quindi è corretto forse questo problema esisteva anche quando
+
+422
+00:53:02,720 --> 00:53:19,120
+ho fatto la prima parte ma per qualche motivo non si è verificato strano in
+
+423
+00:53:19,120 --> 00:53:24,080
+effetti questo è un errore però per la parte 1 non ha funzionato boh chissà
+
+424
+00:53:24,080 --> 00:53:29,960
+perché non sto a guardare adesso bene quindi adesso posso eseguire la mia
+
+425
+00:53:29,960 --> 00:53:34,200
+possa eseguire il problema così com'è
+
+426
+00:53:35,520 --> 00:53:43,360
+8 è la soluzione attesa sì bene quindi adesso me lo provo sul mio problema
+
+427
+00:53:43,360 --> 00:53:51,600
+vero proprio spero funzioni perché prima o poi dovrò iniziare a lavorare oggi
+
+428
+00:53:51,600 --> 00:54:02,840
+5 9 0 8 2 4 perfetto è la soluzione sì bene grazie per avermi sopportato e ci
+
+429
+00:54:02,840 --> 00:54:16,720
+vediamo alla prossima ciao ciao
+
