@@ -1,0 +1,596 @@
+1
+00:00:00,000 --> 00:00:06,880
+Ciao a tutti e benvenuti all'Advent of Code 2022 giorno 9. Oggi non avevo tempo per
+
+2
+00:00:06,880 --> 00:00:11,340
+fare un intero video, l'ho fatto velocemente stamattina e quindi mi
+
+3
+00:00:11,340 --> 00:00:18,240
+inviterò a spiegare come ho risolto il giorno nove. Il giorno nove ha una
+
+4
+00:00:18,240 --> 00:00:22,960
+difficoltà che è praticamente tutta inclusa nel capire come funziona il
+
+5
+00:00:22,960 --> 00:00:28,000
+problema, quindi qual è la domanda che ci fa. L'idea di base è che abbiamo una
+
+6
+00:00:28,000 --> 00:00:34,760
+serie di mosse che sono date da una direzione nelle quattro
+
+7
+00:00:34,760 --> 00:00:41,280
+direzioni cardinali e un numero dei passi. Queste mosse muovono la coda di
+
+8
+00:00:41,280 --> 00:00:46,040
+una corda che funziona più o meno come il gioco snake ma non esattamente quindi
+
+9
+00:00:46,040 --> 00:00:52,640
+noi muoviamo la parte iniziale di una corda che viene chiamata head quindi
+
+10
+00:00:52,640 --> 00:00:59,600
+questa H e quando la head si muove sempre di una casella alla volta la coda
+
+11
+00:00:59,600 --> 00:01:05,720
+segue e la coda segue secondo questa logica. Se vediamo se c'è un esempio, si
+
+12
+00:01:05,720 --> 00:01:13,200
+quando vedete qui un esempio, quando la coda si trova
+
+13
+00:01:13,200 --> 00:01:18,120
+allineata in orizzontale verticale con la testa si muove di una casella
+
+14
+00:01:18,120 --> 00:01:23,680
+avvicinandosi quindi rimane sempre a una distanza al massimo di 1. Non si muove
+
+15
+00:01:23,680 --> 00:01:29,840
+mai per sovrapporsi alla testa ma parte inizialmente dalla situazione in cui la
+
+16
+00:01:29,840 --> 00:01:37,600
+testa e la coda si sovrappongono. Mentre se la coda è in diagonale rispetto alla
+
+17
+00:01:37,600 --> 00:01:42,960
+testa quindi non è in orizzontale e verticale ma entrambi gli assi c'è uno
+
+18
+00:01:42,960 --> 00:01:48,240
+spostamento allora in quel caso la coda si muove sempre di uno in diagonale quindi
+
+19
+00:01:48,240 --> 00:01:53,320
+in realtà salta fa un movimento tipo
+
+20
+00:01:53,320 --> 00:01:58,280
+sto per dire alfiere ma non è esatto perché si muove di uno quindi come il
+
+21
+00:01:58,280 --> 00:02:01,080
+pedone quando mangia essenzialmente ma in entrambi le regioni quindi in realtà
+
+22
+00:02:01,080 --> 00:02:06,400
+non è il pedone e per avvicinarsi alla testa quindi a ogni movimento della
+
+23
+00:02:06,400 --> 00:02:11,320
+testa possiamo avere non necessariamente ma possiamo avere un movimento della coda
+
+24
+00:02:11,320 --> 00:02:15,760
+che può essere in diagonale orizzontale secondo queste regole. Quindi il problema
+
+25
+00:02:15,760 --> 00:02:20,720
+ci dà una serie di mosse della testa e ci chiede di calcolare quali sono le
+
+26
+00:02:20,720 --> 00:02:26,400
+posizioni che la coda occupa nel corso del tempo seguendo la testa mentre fa
+
+27
+00:02:26,400 --> 00:02:31,920
+questo movimento. Quindi vediamo come l'ho implementato. Innanzitutto la
+
+28
+00:02:31,920 --> 00:02:37,080
+lettura dell'input è banale questo è un input di esempio abbiamo una lettera e un
+
+29
+00:02:37,080 --> 00:02:43,320
+numero quindi io semplicemente ritorno una lista di duple dove la prima
+
+30
+00:02:43,320 --> 00:02:48,600
+il primo elemento della dupla è la lettera e il secondo è il numero di passi
+
+31
+00:02:48,600 --> 00:02:55,800
+dopodiché visto che a me in realtà non interessa mai come dire non interessa
+
+32
+00:02:55,800 --> 00:03:00,760
+mai il movimento in sé non interessa mai cosa c'è dentro questa lista di
+
+33
+00:03:00,760 --> 00:03:05,560
+passi ma interessa la posizione della testa mi creo subito un generatore di
+
+34
+00:03:05,560 --> 00:03:11,120
+posizioni della testa. Questo generatore si prende in pasto l'input del problema
+
+35
+00:03:11,120 --> 00:03:16,280
+quindi il risultato della lettura dell'input di get input e mi tira fuori
+
+36
+00:03:16,280 --> 00:03:20,760
+una per una tutte le posizioni della testa assumendo che la posizione
+
+37
+00:03:20,760 --> 00:03:29,400
+iniziale sia 00 quindi inizialmente mi fa yield di 00 poi per ogni passo nel
+
+38
+00:03:29,400 --> 00:03:37,320
+problema ripete in tante volte quante sono qui i passi quindi quante sono qua
+
+39
+00:03:37,320 --> 00:03:41,240
+in steps mi ripete questo movimento quindi per
+
+40
+00:03:41,240 --> 00:03:49,200
+esempio se io ho U che vuol dire app si va a vedere in questo dizionario che U
+
+41
+00:03:49,200 --> 00:03:55,880
+corrisponde a 0 meno 1 quindi sto andando a incrementare l'asse y ho usato
+
+42
+00:03:55,880 --> 00:04:00,840
+la convenzione tipica del computer graphic quindi la y va verso basso
+
+43
+00:04:00,840 --> 00:04:07,100
+questo rende facile fare una print del problema se ne ho bisogno cosa che alla
+
+44
+00:04:07,100 --> 00:04:11,760
+fine non è nemmeno fatto perché ha funzionato direttamente quindi qui cosa
+
+45
+00:04:11,760 --> 00:04:17,000
+faccio ripeto per ogni step calcolo il delta quindi il movimento richiesto da
+
+46
+00:04:17,000 --> 00:04:21,920
+questa da questa direzione incremento la posizione della testa
+
+47
+00:04:21,920 --> 00:04:28,160
+negli assi in base a questo delta e la faccio un yield quindi la do a chi sta
+
+48
+00:04:28,160 --> 00:04:34,440
+chiamando il genitore noto ora che non ha senso recuperare questo dx d y nel
+
+49
+00:04:34,440 --> 00:04:37,600
+ciclo perché è sempre lo stesso per una direzione quindi lo posso mettere fuori
+
+50
+00:04:37,600 --> 00:04:41,120
+è una piccolissima ottimizzazione ma tanto vale
+
+51
+00:04:41,120 --> 00:04:46,000
+quindi questo genitore ci dà tutte le posizioni della testa una dietro l'altra
+
+52
+00:04:46,000 --> 00:04:51,320
+così che non dobbiamo più preoccuparci di come è rappresentata la
+
+53
+00:04:51,320 --> 00:04:55,920
+di cosa c'è nell'input ci interessa solo la posizione della testa perché
+
+54
+00:04:55,920 --> 00:05:01,680
+quello è ciò che muove il problema per la parte 1 quindi cosa faccio
+
+55
+00:05:01,680 --> 00:05:08,640
+inizializzo la coda che inizialmente 0 1 inizializzo un set di posizioni della
+
+56
+00:05:08,640 --> 00:05:14,760
+testa quindi mi serve sapere dove si trovava la scusate la coda quindi mi
+
+57
+00:05:14,760 --> 00:05:17,680
+serve sapere dove si trovava la coda nel tempo perché quello è l'input del
+
+58
+00:05:17,680 --> 00:05:21,880
+problema e se la coda occupa la stessa posizione due volte la conto come una
+
+59
+00:05:21,880 --> 00:05:29,120
+sola quindi è un test dopodiché itero su tutte le posizioni della testa quindi
+
+60
+00:05:29,120 --> 00:05:34,920
+uso il genitore che ho appena mostrato per ognuna mi segno dove si trova la
+
+61
+00:05:34,920 --> 00:05:41,760
+coda utilizzo una funzione che è il nocciolo del problema che è quella che
+
+62
+00:05:41,760 --> 00:05:46,360
+calcola come si sposta la coda in base alla posizione della testa quindi
+
+63
+00:05:46,360 --> 00:05:49,360
+questa è in realtà la logica vera e propria
+
+64
+00:05:49,360 --> 00:05:54,100
+applico lo spostamento alla coda e ricomincio quindi ogni ciclo sposto la
+
+65
+00:05:54,100 --> 00:05:58,960
+testa guardo come spostare la coda salvo la posizione della coda e il risultato di
+
+66
+00:05:58,960 --> 00:06:03,200
+questa funzione è la posizione della coda questo è quanto quindi ciò che ci
+
+67
+00:06:03,200 --> 00:06:09,360
+rimane da fare è capire come implementare questa funzione te dir direction che ho
+
+68
+00:06:09,360 --> 00:06:14,240
+deciso di implementare come una funzione che presa in input la posizione della
+
+69
+00:06:14,240 --> 00:06:20,840
+testa quindi a x e a x e a y quindi head x e head y e la posizione
+
+70
+00:06:20,840 --> 00:06:24,480
+della coda ci dice l'offset per cui la coda si deve spostare
+
+71
+00:06:24,480 --> 00:06:29,200
+questo mi ha richiesto un po di tempo proprio per capire il problema che poi
+
+72
+00:06:29,200 --> 00:06:32,360
+in presentazione vedete che sono quattro righe mi sono fatto pure uno
+
+73
+00:06:32,360 --> 00:06:37,600
+schemino che potete trovare nella docstring di questo problema quindi
+
+74
+00:06:37,600 --> 00:06:42,920
+assumendo che t qui sia la coda abbiamo queste posizioni
+
+75
+00:06:42,920 --> 00:06:47,200
+rappresentate da un punto posizioni relative della testa che sono posizioni
+
+76
+00:06:47,200 --> 00:06:50,880
+in cui non si fa niente quindi non c'è uno spostamento
+
+77
+00:06:50,880 --> 00:06:56,480
+mentre queste posizioni marcate da x e y rappresentano un movimento verticale
+
+78
+00:06:56,480 --> 00:07:01,680
+orizzontale le posizioni marcate da di rappresentano un movimento in diagonale
+
+79
+00:07:01,680 --> 00:07:08,000
+queste posizioni angoli sono impossibili il problema ci sta dicendo che per come
+
+80
+00:07:08,000 --> 00:07:14,000
+è configurata la situazione la coda non può mai essere due non può mai essere
+
+81
+00:07:14,000 --> 00:07:17,320
+più distante di così quindi questa questa situazione impossibile quindi
+
+82
+00:07:17,320 --> 00:07:23,920
+possiamo ignorarlo cosa faccio? innanzitutto calcolo la distanza
+
+83
+00:07:23,920 --> 00:07:30,760
+sull'asse x e y tra testa e coda in questo passo quindi sottrago le due
+
+84
+00:07:30,760 --> 00:07:36,880
+posizioni assolute di testa e coda controllo se il valore assoluto di
+
+85
+00:07:36,880 --> 00:07:40,400
+queste due è in entrambi i casi minore o uguale 1 il che significa che ci
+
+86
+00:07:40,400 --> 00:07:46,800
+troviamo in questo sotto insieme in questo rettangolo qua se è così
+
+87
+00:07:46,800 --> 00:07:53,560
+restituisco 00 perché non c'è movimento altrimenti restituisco cosa? un numero che
+
+88
+00:07:53,560 --> 00:07:59,560
+deve essere più 1 meno 1 0 in entrambi gli assi che cos'è questo numero?
+
+89
+00:07:59,560 --> 00:08:04,520
+questo si chiama segno essenzialmente in molti linguaggi questo è già definito
+
+90
+00:08:04,520 --> 00:08:10,840
+in python è un po' problematico quindi me lo sono reimplementato io il motivo
+
+91
+00:08:10,840 --> 00:08:16,480
+per cui in python non offre una complicata faccenda di casi limite
+
+92
+00:08:16,480 --> 00:08:20,240
+quando per esempio ha un float o un valor che è none o infinito cose del
+
+93
+00:08:20,240 --> 00:08:23,960
+genere quindi qui non niente a genere mi sono implementato questa funzione segno
+
+94
+00:08:23,960 --> 00:08:28,920
+che prende un numero e se è maggiore 0 mi dà 1 se è minore di 0 mi dà meno 1
+
+95
+00:08:28,920 --> 00:08:33,840
+altrimenti mi dà 0 quindi questa funzione mi dice dove in che direzione
+
+96
+00:08:33,840 --> 00:08:39,280
+devo spostarmi? per ogni asse quindi se un elemento sta sopra
+
+97
+00:08:39,280 --> 00:08:44,200
+vado verso l'alto quindi più 1 sotto meno 1 altrimenti 0 e lo faccio sui due
+
+98
+00:08:44,200 --> 00:08:49,680
+assi la combinazione mi dice in che direzione devo andare e questa è la
+
+99
+00:08:49,680 --> 00:08:54,880
+direzione della coda quindi la calcolo aggiornò la coda in base alla sua nuova
+
+100
+00:08:54,880 --> 00:09:00,440
+posizione quindi in base all'offset dato da questa funzione e vado avanti
+
+101
+00:09:00,440 --> 00:09:04,560
+parte 2 sembra un macello ma in realtà è
+
+102
+00:09:04,560 --> 00:09:09,400
+piuttosto semplice in una volta implementata la parte 1 perché la parte 2
+
+103
+00:09:09,400 --> 00:09:16,000
+ci dice guarda non c'è più solo una testa una coda ma abbiamo 9 code quindi la
+
+104
+00:09:16,000 --> 00:09:21,680
+testa si muove il primo elemento che loro chiamano nodo perché questa è una
+
+105
+00:09:21,680 --> 00:09:29,080
+corda secondo loro quindi viene potete immaginare una corda che scorre non so
+
+106
+00:09:29,080 --> 00:09:34,040
+sul palimento come un serpente e i nodi sono diversi punti a corda ogni nodo
+
+107
+00:09:34,040 --> 00:09:39,040
+segue la stessa logica che avevamo prima per seguire il nodo successivo quindi la
+
+108
+00:09:39,040 --> 00:09:46,840
+testa si muove secondo le solite mosse il nodo 1 si muove come faceva prima la
+
+109
+00:09:46,840 --> 00:09:53,000
+coda nella parte 1 il nodo 2 si muove seguendo non la testa ma il nodo 1 il
+
+110
+00:09:53,000 --> 00:09:56,000
+nodo 3 si muove seguendo il nodo 2 e così via quindi abbiamo la stessa
+
+111
+00:09:56,000 --> 00:10:00,480
+logica diciamo a cascata ogni nodo segue il nodo successivo a
+
+112
+00:10:00,480 --> 00:10:04,360
+parte il primo nodo che ovviamente è la testa quindi si muove secondo le
+
+113
+00:10:04,360 --> 00:10:08,680
+mosse date dall'input e l'ultimo nodo che segue il nodo davanti ma non è
+
+114
+00:10:08,680 --> 00:10:13,880
+seguito da nessuno quindi in realtà la parte 2 è semplicemente una modifica della
+
+115
+00:10:13,880 --> 00:10:21,560
+parte 1 anziché avere una tupla tx dy che rappresenta la posizione della coda
+
+116
+00:10:21,560 --> 00:10:26,240
+abbiamo una lista di tuple che rappresenta i vari nodi ho messo un
+
+117
+00:10:26,240 --> 00:10:32,600
+notes number in una variabile una costante quindi inizializzo questa
+
+118
+00:10:32,600 --> 00:10:38,440
+lista che inizialmente è 0 perché tutti i nodi sono sovrapposti nella posizione
+
+119
+00:10:38,440 --> 00:10:45,360
+00 inizializzo come sempre il mio set di posizioni della coda
+
+120
+00:10:45,360 --> 00:10:49,640
+itero esattamente come prima sulle posizioni della testa quindi mi faccio
+
+121
+00:10:49,640 --> 00:10:56,080
+dare le mosse e poi cosa faccio dico guarda il nodo 0 è semplicemente la
+
+122
+00:10:56,080 --> 00:11:03,120
+testa quindi modifico la posizione nodo 0 per essere quella della testa
+
+123
+00:11:03,120 --> 00:11:09,800
+dopodiché itero sui nodi e qui è importante notare una cosa quando itero sui
+
+124
+00:11:09,800 --> 00:11:16,360
+nodi innanzitutto uso un iteratore sull'indice non faccio un iteratore sui
+
+125
+00:11:16,360 --> 00:11:21,080
+nodi stessi perché non posso magari in questo caso si può anche però è una
+
+126
+00:11:21,080 --> 00:11:25,840
+schifezza è meglio non farlo non voglio iterare non voglio modificare un oggetto
+
+127
+00:11:25,840 --> 00:11:31,040
+su cui sto iterando perché è una fabbrica di problemi quindi mi faccio mio
+
+128
+00:11:31,040 --> 00:11:35,440
+bel iteratore sull'indice che funziona indipendentemente da cosa faccio su
+
+129
+00:11:35,440 --> 00:11:41,360
+l'effettiva lista perché non la tocca dentro questo iteratore muovendomi dalla
+
+130
+00:11:41,360 --> 00:11:46,200
+testa alla coda applicò la logica che avevo nella parte 1, quindi prendo le
+
+131
+00:11:46,200 --> 00:11:49,600
+coordinate del nodo prendo le coordinate nel nodo prima che è
+
+132
+00:11:49,600 --> 00:11:56,240
+la testa relativa a questo nodo quindi col nodo numero 1 con un nodo in
+
+133
+00:11:56,240 --> 00:12:00,740
+posizione 1 quindi quella appena dopo la testa questo è effettivamente la testa
+
+134
+00:12:00,740 --> 00:12:05,640
+con l'head in posizione 2 questo sarà, utilizzerà il nodo in posizione 1 come
+
+135
+00:12:05,640 --> 00:12:10,040
+testa quindi il nodo usa quello prima come testa e applica la stessa identica
+
+136
+00:12:10,040 --> 00:12:16,400
+logica, proprio non c'è differenza, vedete che copia in colla di cosa avevamo prima.
+
+137
+00:12:16,400 --> 00:12:21,280
+Con la differenza che il nodo finale, che è il nodo iniziale ovviamente, è la testa
+
+138
+00:12:21,280 --> 00:12:25,360
+quindi si muove secondo la sua logica, quindi questo range parte da 1 perché la
+
+139
+00:12:25,360 --> 00:12:30,720
+testa non ha un nodo precedente da cui partire ma è mossa con una logica parte
+
+140
+00:12:30,720 --> 00:12:37,560
+e poi mi segno la posizione del nodo finale quindi node-1 che è la
+
+141
+00:12:37,560 --> 00:12:41,480
+coda vera e propria del problema e quindi ho una versione modificata nella
+
+142
+00:12:41,480 --> 00:12:46,760
+parte 1 in cui, anziché avere una sola coda, ne ho una lista ed è importante
+
+143
+00:12:46,760 --> 00:12:52,920
+aggiornarle nel giusto ordine quindi parto dal nodo 0 che è la testa poi
+
+144
+00:12:52,920 --> 00:12:58,200
+itero su tutti i nodi dal nodo 1 incluso in poi e li aggiungo in base alla
+
+145
+00:12:58,200 --> 00:13:03,960
+situazione nodo prima che è considerata la testa e questo è quanto. Questo è un
+
+146
+00:13:03,960 --> 00:13:08,200
+problema su cui si potrebbe fare una bella visualizzazione ma oggi non ho
+
+147
+00:13:08,200 --> 00:13:12,040
+proprio tempo devo lavorare quindi ho fatto questo video di 10 minuti giusto
+
+148
+00:13:12,040 --> 00:13:17,000
+perché magari a qualcuno interessa. Ci vediamo alla prossima sperando che ci
+
+149
+00:13:17,000 --> 00:13:35,960
+sia e buona giornata! Ciao a tutti!
+
