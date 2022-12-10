@@ -42,28 +42,23 @@ def part_one(problem_input: list[tuple[str, int]]) -> int:
     return total_sum
 
 
-def part_two(problem_input: list[tuple[str, int]]) -> list[str]:
-    screen_lines = []
-    current_line = ""
-
+def part_two(problem_input: list[tuple[str, int]]) -> str:
+    screen_content = ""
     for ic, x in processor_generator(problem_input):
         if (ic - 1) % SCREEN_WIDTH == 0 and ic != 0:
-            screen_lines.append(current_line)
-            current_line = ""
+            screen_content += "\n"
         if abs(((ic - 1) % SCREEN_WIDTH) - x) <= 1:
-            current_line += "#"
+            screen_content += "#"
         else:
-            current_line += "."
-    screen_lines.append(current_line)
-    return screen_lines
+            screen_content += "."
+    return screen_content
 
 
 def main() -> None:
     problem_input = get_input()
     print(part_one(problem_input))
-    print("\n".join(part_two(problem_input)))
+    print(part_two(problem_input))
 
 
 if __name__ == "__main__":
     main()
-##..##..#..##...##.##..##..##..##..##..
