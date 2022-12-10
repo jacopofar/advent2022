@@ -19,3 +19,4 @@ In the subtitles folder you can fine the subtitles, they are generated with Whis
 * [Day 07](https://www.youtube.com/watch?v=CP48DR41q28): done
 * [Day 08](https://youtu.be/-baIe5VA8kQ): done
 * [Day 09](https://youtu.be/T60x7lO35IM): done
+* Day 10: done, no video
