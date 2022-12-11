@@ -124,6 +124,16 @@ def simulate_rounds(
     rounds: int,
     worry_level_decrease_factor: int = 3,
 ) -> dict[int, int]:
+    """Simulate the monkey business, return the interactions.
+
+    The logic is complicated and described in the AoC website.
+    What matters is that each monkey has a list of numbers and at each turn
+    changes them and throws them to other monkeys according to its own
+    parameters.
+
+    This simulates multiple rounds of throws and count how many items pass
+    through each monkey.
+    """
     items = deepcopy(items)
     inspected_items_count = {i: 0 for i in range(len(monkeys))}
     lcm = math.lcm(*[m.divisor for m in monkeys])
@@ -149,12 +159,18 @@ def simulate_rounds(
 
 
 def part_one(items: list[list[int]], monkeys: list[Monkey]) -> int:
+    """Multiply the two greatest interaction counts."""
     inspected_items_count = simulate_rounds(items, monkeys, 20)
     most_inspected = sorted(inspected_items_count.values())
     return most_inspected[-1] * most_inspected[-2]
 
 
 def part_two(items: list[list[int]], monkeys: list[Monkey]) -> int:
+    """Same as part 1, but 10k rounds and worry_factor is 1.
+
+    This means the "worry levels", that is, the numbers passed around, will
+    become huge. Some modulo arithmetic trickery is needed, see docstring.
+    """
     inspected_items_count = simulate_rounds(items, monkeys, 10_000, 1)
     most_inspected = sorted(inspected_items_count.values())
     return most_inspected[-1] * most_inspected[-2]
