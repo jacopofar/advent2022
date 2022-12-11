@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from copy import deepcopy
 import logging
+import math
 
 logging.basicConfig(level=logging.INFO)
 
@@ -15,7 +16,7 @@ class Monkey:
     target_if_not_divisible: int
 
     def perform_monkey_business(
-        self, own_items: list[int], worry_level_decrease_factor: int = 3
+        self, own_items: list[int], lcm: int, worry_level_decrease_factor: int
     ) -> dict[int, list[int]]:
         """Simulate the monkey activities in a turn, return the thrown items.
 
@@ -25,6 +26,30 @@ class Monkey:
         In short, the monkey consumes the items, applies some rules to
         change them and then throw each one (with a changed value) to a
         specific monkey.
+
+        lcm is the LCM between the divisors of all the monkeys.
+
+        This is necessary for part 2 because the numbers get HUGE. Part 1
+        is fine without any trick.
+
+        So, the trick is to notice that all we care about is the divisibility
+        for a few numbers, the divisors of all the monkeys.
+        This means that we don't need to know the actual worry level but just
+        the fact it is or not divisible by some value D.
+        For a given value D, the number X and X + kD are both divisible or not,
+        for an integer k (positive here, everything is positive).
+        The LCM between all divisors allows us to keep only the modulo of a
+        worry level which is all w eneed to do all divisibility checks, not the
+        value itself.
+
+        I got this idea from a friend, my initial approach was to keep a list
+        of factors and prune it when needed, but this is much simpler.
+
+        You can imagine the numbers in a ring, and divisibility checks their
+        position in the ring. The modulo calculates the number as a position
+        of the ring ignoring multiple rounds. This works only if the ring
+        length is a multiple of each possible divisor (otherwise the modulo
+        will have an effect on divisibility), and LCM does that.
         """
         result: dict[int, list[int]] = dict()
         for worry_level in own_items:
@@ -41,6 +66,7 @@ class Monkey:
                 raise ValueError(f"Cannot process operator '{self.op}'")
             worry_level = worry_level // worry_level_decrease_factor
 
+            worry_level = worry_level % lcm
             if worry_level % self.divisor == 0:
                 if self.target_if_divisible not in result:
                     result[self.target_if_divisible] = []
@@ -56,7 +82,7 @@ def get_input() -> tuple[list[list[int]], list[Monkey]]:
     items: list[list[int]] = []
     monkeys: list[Monkey] = []
 
-    with open("input/day11.sample.txt") as fr:
+    with open("input/day11.txt") as fr:
         for monkey_description in fr.read().split("\n\n"):
             lines = monkey_description.splitlines()
             # line 0: 'Monkey X:'
@@ -100,21 +126,20 @@ def simulate_rounds(
 ) -> dict[int, int]:
     items = deepcopy(items)
     inspected_items_count = {i: 0 for i in range(len(monkeys))}
-    # import time
-
+    lcm = math.lcm(*[m.divisor for m in monkeys])
     for round_i in range(rounds):
-        # time.sleep(0.1)
         for m_idx, m in enumerate(monkeys):
             inspected_items_count[m_idx] += len(items[m_idx])
             thrown_items = m.perform_monkey_business(
-                items[m_idx], worry_level_decrease_factor
+                items[m_idx],
+                lcm,
+                worry_level_decrease_factor,
             )
             # the monkey throws away all the objects
             items[m_idx] = []
 
             for m_target, t_items in thrown_items.items():
                 items[m_target] += t_items
-        print("round", round_i + 1, "inspection counts", inspected_items_count)
         logging.debug(
             f"After round {round_i + 1}, the monkeys are holding items with these worry levels:"
         )
