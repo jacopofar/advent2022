@@ -20,4 +20,5 @@ In the subtitles folder you can fine the subtitles, they are generated with Whis
 * [Day 08](https://youtu.be/-baIe5VA8kQ): done
 * [Day 09](https://youtu.be/T60x7lO35IM): done
 * Day 10: done, no video
-* Day 11: done, no video but lengthy comment about LCM trick
+* [Day 11](https://www.youtube.com/watch?v=H4PsSbMhBDY): done, explanation video
+* Day 12: done
