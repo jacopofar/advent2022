@@ -22,3 +22,4 @@ In the subtitles folder you can fine the subtitles, they are generated with Whis
 * Day 10: done, no video
 * [Day 11](https://www.youtube.com/watch?v=H4PsSbMhBDY): done, explanation video
 * Day 12: done
+* Day 13: done
