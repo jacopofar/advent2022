@@ -5,7 +5,7 @@ Packet = list[Union[int, "Packet"]]
 
 
 def check_packet(p: Any) -> Packet:
-    """Ensures that the pacet is well-formed.
+    """Ensures that the packet is well-formed.
 
     Also, makes mypy happy.
     """
@@ -30,10 +30,10 @@ def get_input() -> list[tuple[Packet, Packet]]:
 
 
 def is_right_order(l: Packet | int, r: Packet | int) -> bool | None:
-    """Recursively compares two packet.
+    """Recursively compares two packets.
 
     This is done according to the rules of the problem, the code mimics the
-    very same description of them. Notice that sometimes the comparison is
+    description structure. Notice that sometimes the comparison is
     None and then the problem asks to keep checking.
 
     In theory this means two packets could be identical and the comparison
@@ -74,7 +74,8 @@ def part_one(packets: list[tuple[Packet, Packet]]) -> int:
 
 def part_two(packets: list[tuple[Packet, Packet]]) -> int:
     """Part 2 requires to ignore the couples, put all the packets together
-    plus two separators and order until the consecutive pairs are fine.
+    plus two separator packets and order until the consecutive pairs
+    are fine.
 
     Then we need to find the position of the dividers.
     """
