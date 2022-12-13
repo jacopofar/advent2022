@@ -1,7 +1,7 @@
 from ast import literal_eval
-from typing import Any, Union
+from typing import Any
 
-Packet = list[Union[int, "Packet"]]
+Packet = list[int | "Packet"]
 
 
 def check_packet(p: Any) -> Packet:
