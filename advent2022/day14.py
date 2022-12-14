@@ -106,6 +106,7 @@ def part_two(rocks: set[Coord]) -> int:
             SAND_POUR_POINT, abyss_limit, rocks_with_bottom, sand
         )
         sand.add(c)
+    # visualize ignoring the bottom, so it fits a smaller console
     show_state(rocks, sand)
     return len(sand)
 
