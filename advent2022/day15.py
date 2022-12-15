@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 import re
 
+LIMIT_FOR_PART2 = 4000000
+
 
 @dataclass(frozen=True, eq=True)
 class MultiRange:
@@ -16,6 +18,7 @@ class MultiRange:
     A for cycle could have done the same for part 1, part 2 did require a
     completely different thing -_-
     """
+
     positions: tuple[tuple[int, int], ...]
 
     def __add__(self: "MultiRange", other: "MultiRange") -> "MultiRange":
@@ -103,6 +106,48 @@ class Sensor:
                     ((self.sensor_x - max_variation, self.sensor_x + max_variation),)
                 )
 
+    def get_edges_lines_parameters(self) -> tuple[int, int, int, int]:
+        """Get the parameters of the lines on the edge.
+
+        Sorry, I could find no way to write a nice short description -_-
+        I'm tired and just want to get the star!
+
+        Anyways, for each sensor there's an area in which we know there's
+        nothing. This area looks like square rotated 45 degrees.
+
+        The problem is asking to find the only point that is not covered by
+        any of these squares. This means that this point is at a distance of
+        exactly 1 from some of these squares.
+
+        If we find, for each square, the equations of the two lines going up
+        and down, we can just check all their combinations for the solution.
+        There are in my case 30 sensors, so 60 lines which means at worst
+        60 * 60 points to check, each one at worst against all 30 sensors.
+
+        Is it the bestest solution? no. Will it work in a decent time? Likely.
+
+        The equations of the lines are always in the form:
+
+            Y = mX + q
+        where m is +1 and -1 exactly twice each (4 sides with 2 orientations)
+        so 1 is the only relevant parameter.
+        """
+        # take the point right at the left of the square
+        # its coordinates are self.sensor_x - self.my_free_range() - 1, self.sensor_y
+        # so the line must touch it
+        # Y = mX + q
+        # so q = Y - mX
+        # for m = +/- 1
+        upwards_left = self.sensor_y + (self.sensor_x - self.my_free_range() - 1)
+        downwards_left = self.sensor_y - (self.sensor_x - self.my_free_range() - 1)
+        # same for the other side
+        upwards_right = self.sensor_y + (self.sensor_x + self.my_free_range() + 1)
+        downwards_right = self.sensor_y - (self.sensor_x + self.my_free_range() + 1)
+        return (upwards_left, upwards_right, downwards_left, downwards_right)
+
+    def contains(self, x: int, y: int) -> bool:
+        return self.distance(x, y) <= self.my_free_range()
+
 
 def get_input() -> list[Sensor]:
     pattern = re.compile(
@@ -127,12 +172,48 @@ def part_one(sensors: list[Sensor]) -> int:
 
 
 def part_two(sensors: list[Sensor]) -> int:
-    return 42
+    down_lines: set[int] = set()
+    up_lines: set[int] = set()
+    for s in sensors:
+        (
+            upwards_left,
+            upwards_right,
+            downwards_left,
+            downwards_right,
+        ) = s.get_edges_lines_parameters()
+        down_lines.add(downwards_left)
+        down_lines.add(downwards_right)
+        up_lines.add(upwards_left)
+        up_lines.add(upwards_right)
+    for u in up_lines:
+        for d in down_lines:
+
+            # NOTE: this uses the graphic convetion, so Y is swapped!
+            # upwards goes downwards...
+            # upwards: Y = u - X
+            # downwards: Y = d + X
+            x = (u - d) / 2
+            if x.is_integer():
+                x = int(x)
+            else:
+                continue
+            y = u - x
+            if x > LIMIT_FOR_PART2 or x < 0 or y > LIMIT_FOR_PART2 or y < 0:
+                continue
+            if any(s.contains(x, y) for s in sensors):
+                continue
+            else:
+                return x * LIMIT_FOR_PART2 + y
+    raise ValueError("no solution found???")
 
 
 def main() -> None:
     sensors = get_input()
-    print(part_one(sensors))
+    # for s in sensors:
+    #     if s.contains(14, 11):
+    #         print(s)
+    # return
+    # print(part_one(sensors))
     print(part_two(sensors))
 
 
