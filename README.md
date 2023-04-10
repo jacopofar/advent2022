@@ -25,3 +25,4 @@ In the subtitles folder you can fine the subtitles, they are generated with Whis
 * Day 13: done
 * Day 14: done, plus minimal visualization
 * Day 15: done
+* Day 22: done, no video, a bit ugly
