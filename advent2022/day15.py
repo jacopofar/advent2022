@@ -187,7 +187,6 @@ def part_two(sensors: list[Sensor]) -> int:
         up_lines.add(upwards_right)
     for u in up_lines:
         for d in down_lines:
-
             # NOTE: this uses the graphic convetion, so Y is swapped!
             # upwards goes downwards...
             # upwards: Y = u - X

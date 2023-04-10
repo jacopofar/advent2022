@@ -17,7 +17,7 @@ build-backend = "pdm.pep517.api"
 [tool.pdm.dev-dependencies]
 dev = [
     "mypy>=0.991",
-    "black>=22.10.0",
+    "black>=23.3.0",
     "setuptools>=65.6.3",
 ]
 
